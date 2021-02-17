@@ -8,17 +8,7 @@ import * as cartActions from "../../store/actions/cart";
 
 const CartScreen = () => {
   const cartSum = useSelector((state) => state.cart.sum);
-  const cartItems = useSelector((state) => {
-    const arrayCartItems = [];
-    for (const key in state.cart.items) {
-      arrayCartItems.push({
-        itemID: key,
-        title: state.cart.items[key].title,
-        price: state.cart.items[key].price,
-      });
-    }
-    return arrayCartItems;
-  });
+  const cartItems = useSelector((state) => state.cart.items);
 
   const dispatch = useDispatch();
 
@@ -36,12 +26,12 @@ const CartScreen = () => {
       </View>
       <FlatList
         data={cartItems}
-        keyExtractor={(item) => item.itemID}
+        keyExtractor={(item) => item.id}
         renderItem={(itemData) => (
           <CartItem
             {...itemData.item}
             onRemove={() => {
-              dispatch(cartActions.removeFromCart(itemData.item.itemID));
+              dispatch(cartActions.removeFromCart(itemData.item.id));
             }}
           />
         )}

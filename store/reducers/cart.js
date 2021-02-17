@@ -1,8 +1,7 @@
 import { ADD_TO_CART, REMOVE_FROM_CART } from "../actions/cart";
-import CartItem from "../../models/cart-item";
-import items from "./items";
+import _ from "lodash";
 const initialState = {
-  items: {},
+  items: [],
   sum: 0,
 };
 
@@ -11,25 +10,23 @@ export default (state = initialState, action) => {
     case ADD_TO_CART:
       console.log("Adding to cart");
       const addedItem = action.item;
-      const price = addedItem.price;
-      const title = addedItem.title;
 
-      if (!state.items[addedItem.id]) {
-        const newCartItem = new CartItem(price, title);
+      if (!state.items.includes(addedItem)) {
+        console.log("Does not exist");
         return {
-          items: { ...state.items, [addedItem.id]: newCartItem },
-          sum: state.sum + price,
+          items: [...state.items, addedItem],
+          sum: state.sum + addedItem.price,
         };
+      } else {
+        console.log("Already exists");
       }
-
+      break;
     case REMOVE_FROM_CART:
-      const selectedItem = state.items[action.itemId];
-      const updatedCartItems = { ...state.items };
-      delete updatedCartItems[action.itemId];
+      console.log(action.itemId);
+      const updatedItems = _.filter(state.items, (o) => o.id !== action.itemId);
       return {
-        ...state,
-        items: updatedCartItems,
-        sum: state.sum - selectedItem.price,
+        items: updatedItems,
+        sum: 0,
       };
   }
 
