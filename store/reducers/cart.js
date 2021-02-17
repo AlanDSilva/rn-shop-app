@@ -1,5 +1,6 @@
-import ADD_TO_CART from "../actions/cart";
+import { ADD_TO_CART } from "../actions/cart";
 import CartItem from "../../models/cart-item";
+import items from "./items";
 const initialState = {
   items: {},
   sum: 0,
@@ -8,6 +9,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
+      console.log("Adding to cart");
       const addedItem = action.item;
       const price = addedItem.price;
       const title = addedItem.title;
@@ -19,6 +21,8 @@ export default (state = initialState, action) => {
           sum: state.sum + price,
         };
       }
+      console.log("Adding to cart");
   }
+
   return state;
 };
