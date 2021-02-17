@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import ProductItem from "../../components/shop/ProductItem";
 
-const ItemsScreen = () => {
+const ItemsScreen = (props) => {
   const products = useSelector((state) => state.items.availableItems);
   return (
     <FlatList
@@ -13,7 +13,12 @@ const ItemsScreen = () => {
       renderItem={(itemData) => (
         <ProductItem
           {...itemData.item}
-          onViewDetail={() => {}}
+          onViewDetail={() => {
+            props.navigation.navigate("Item Details", {
+              itemId: itemData.item.id,
+              itemTitle: itemData.item.title,
+            });
+          }}
           onAddToCart={() => {}}
         />
       )}
