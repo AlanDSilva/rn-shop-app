@@ -4,7 +4,7 @@ const ITEMS = [
   new Item(
     "p1",
     "Red Shirt",
-    "New red shirt",
+    "Bacon ipsum dolor amet meatball pork loin tail, bresaola flank tongue ribeye drumstick ball tip buffalo doner andouille. Drumstick rump bacon beef ribs jowl kevin, flank shank picanha biltong pork chop sausage beef strip steak. Turducken frankfurter rump shank strip steak ham hock tenderloin. Brisket venison cow salami. Chislic venison drumstick brisket, tenderloin ribeye tri-tip fatback. ",
     "Clothes",
     { city: "Helsinki", country: "Finland" },
     [
@@ -19,7 +19,7 @@ const ITEMS = [
   new Item(
     "p2",
     "Baige Cardigan",
-    "Old beige cardigan found under piano",
+    "Jerky cow chislic, pork chop filet mignon chicken chuck capicola brisket. Salami pig alcatra, meatball shoulder pork chop ham short ribs leberkas flank.",
     "Clothes",
     { city: "Helsinki", country: "Finland" },
     [
@@ -34,7 +34,7 @@ const ITEMS = [
   new Item(
     "p3",
     "Pink hat",
-    "Wear it to make a statement!!",
+    "Jowl fatback ball tip, alcatra tail rump ham flank sausage brisket shank salami. Hamburger salami bacon prosciutto kevin ball tip alcatra t-bone swine. Fatback chicken tenderloin tri-tip spare ribs buffalo, landjaeger ham hock sausage pancetta.",
     "Clothes",
     { city: "Oulu", country: "Finland" },
     [
