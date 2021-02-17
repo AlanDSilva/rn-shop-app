@@ -6,12 +6,17 @@ import ProductItem from "../../components/shop/ProductItem";
 
 const ItemsScreen = () => {
   const products = useSelector((state) => state.items.availableItems);
-  console.log(products);
   return (
     <FlatList
       data={products}
       keyExtractor={(item) => item.id}
-      renderItem={(itemData) => <ProductItem {...itemData.item} />}
+      renderItem={(itemData) => (
+        <ProductItem
+          {...itemData.item}
+          onViewDetail={() => {}}
+          onAddToCart={() => {}}
+        />
+      )}
     />
   );
 };

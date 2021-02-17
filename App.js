@@ -17,7 +17,6 @@ export default function App() {
   return (
     <Provider store={store}>
       <ShopNavigator />
-      <Text>Hello world!</Text>
     </Provider>
   );
 }
