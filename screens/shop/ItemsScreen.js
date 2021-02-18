@@ -1,5 +1,12 @@
-import React, { useEffect } from "react";
-import { View, Text, Button, FlatList } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  Button,
+  FlatList,
+  ActivityIndicator,
+  StyleSheet,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import ProductItem from "../../components/shop/ProductItem";
@@ -9,11 +16,17 @@ import * as itemsActions from "../../store/actions/items";
 import Colors from "../../constants/Colors";
 
 const ItemsScreen = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const products = useSelector((state) => state.items.availableItems);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(itemsActions.fetchItems());
+    const loadItems = async () => {
+      setIsLoading(true);
+      await dispatch(itemsActions.fetchItems());
+      setIsLoading(false);
+    };
+    loadItems();
   }, [dispatch]);
 
   const selectItemHandler = (id, title) => {
@@ -22,6 +35,22 @@ const ItemsScreen = (props) => {
       itemTitle: title,
     });
   };
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
+
+  if (!isLoading && products.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <Text>No products found! Maybe start addid some!</Text>
+      </View>
+    );
+  }
 
   return (
     <FlatList
@@ -55,3 +84,7 @@ const ItemsScreen = (props) => {
 };
 
 export default ItemsScreen;
+
+const styles = StyleSheet.create({
+  centered: { flex: 1, justifyContent: "center", alignItems: "center" },
+});
