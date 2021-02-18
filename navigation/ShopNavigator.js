@@ -9,6 +9,7 @@ import ItemsScreen from "../screens/shop/ItemsScreen";
 import ItemDetailsScreen from "../screens/shop/ItemDetailsScreen";
 import CartScreen from "../screens/shop/CartScreen";
 import OrdersScreen from "../screens/shop/OrdersScreen";
+import UserItemsScreen from "../screens/user/UserItemsScreen";
 import HeaderButton from "../components/ui/HeaderButton";
 import Colors from "../constants/Colors";
 
@@ -78,6 +79,29 @@ const OrderStack = () => (
   </Stack.Navigator>
 );
 
+const UserStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="UserItems"
+      component={UserItemsScreen}
+      options={({ navigation }) => ({
+        headerTitle: "Your Items",
+        headerLeft: () => (
+          <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+              title="Menu"
+              iconName="md-menu"
+              onPress={() => {
+                navigation.toggleDrawer();
+              }}
+            />
+          </HeaderButtons>
+        ),
+      })}
+    />
+  </Stack.Navigator>
+);
+
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -105,6 +129,15 @@ const ShopNavigator = () => {
           options={{
             drawerIcon: () => (
               <Ionicons name="md-list" size={23} color={Colors.primary} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="Admin"
+          component={UserStack}
+          options={{
+            drawerIcon: () => (
+              <Ionicons name="md-create" size={23} color={Colors.primary} />
             ),
           }}
         />

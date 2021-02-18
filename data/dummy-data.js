@@ -46,6 +46,36 @@ const ITEMS = [
     "Shipping",
     { id: "u3", username: "user3" }
   ),
+  new Item(
+    "p4",
+    "Tiny Bag",
+    "Bacon ipsum dolor amet meatball pork loin tail, bresaola flank tongue ribeye drumstick ball tip buffalo doner andouille. Drumstick rump bacon beef ribs jowl kevin, flank shank picanha biltong pork chop sausage beef strip steak. Turducken frankfurter rump shank strip steak ham hock tenderloin. Brisket venison cow salami. Chislic venison drumstick brisket, tenderloin ribeye tri-tip fatback. ",
+    "Clothes",
+    { city: "Helsinki", country: "Finland" },
+    [
+      "https://api.time.com/wp-content/uploads/2019/03/jacquemus-tiny-purse.jpg?w=1600&quality=70",
+      "https://cdn.aboutstatic.com/file/c1a4c5f18b2e45bbae947678fd04ba77?width=2000&height=2666&quality=75&bg=F4F4F5&trim=1",
+    ],
+    30,
+    "20-01-2021",
+    "Pickup",
+    { id: "u1", username: "user1" }
+  ),
+  new Item(
+    "p5",
+    "Big Sweater",
+    "Bacon ipsum dolor amet meatball pork loin tail, bresaola flank tongue ribeye drumstick ball tip buffalo doner andouille. Drumstick rump bacon beef ribs jowl kevin, flank shank picanha biltong pork chop sausage beef strip steak. Turducken frankfurter rump shank strip steak ham hock tenderloin. Brisket venison cow salami. Chislic venison drumstick brisket, tenderloin ribeye tri-tip fatback. ",
+    "Clothes",
+    { city: "Helsinki", country: "Finland" },
+    [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReCP0RBjGdgxpR145iFBNwPXSWKouiIWW9NsVt9luvMeq3rP7gVvrcsj-hbhco8iTVLdVoGdff&usqp=CAc",
+      "https://cdn.aboutstatic.com/file/c1a4c5f18b2e45bbae947678fd04ba77?width=2000&height=2666&quality=75&bg=F4F4F5&trim=1",
+    ],
+    30,
+    "20-01-2021",
+    "Shipping",
+    { id: "u1", username: "user1" }
+  ),
 ];
 
 export default ITEMS;
