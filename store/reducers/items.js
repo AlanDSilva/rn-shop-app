@@ -1,5 +1,5 @@
 import ITEMS from "../../data/dummy-data";
-import { DELETE_ITEM } from "../actions/items";
+import { DELETE_ITEM, SET_ITEMS } from "../actions/items";
 
 const initialState = {
   availableItems: ITEMS,
@@ -16,6 +16,11 @@ export default (state = initialState, action) => {
         availableItems: state.availableItems.filter(
           (item) => item.id !== action.itemId
         ),
+      };
+    case SET_ITEMS:
+      console.log("Fetching items");
+      return {
+        availableItems: action.items,
       };
   }
   return state;
