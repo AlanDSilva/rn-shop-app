@@ -11,6 +11,7 @@ import CartScreen from "../screens/shop/CartScreen";
 import OrdersScreen from "../screens/shop/OrdersScreen";
 import UserItemsScreen from "../screens/user/UserItemsScreen";
 import EditItemScreen from "../screens/user/EditItemScreen";
+import AuthScreen from "../screens/user/AuthScreen";
 import HeaderButton from "../components/ui/HeaderButton";
 import Colors from "../constants/Colors";
 
@@ -121,13 +122,20 @@ const UserStack = () => (
   </Stack.Navigator>
 );
 
+const AuthStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="Auth" component={AuthScreen} />
+  </Stack.Navigator>
+);
+
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 const ShopNavigator = () => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator
+      <AuthStack />
+      {/* <Drawer.Navigator
         drawerContentOptions={{
           activeTintColor: Colors.primary,
           itemStyle: { marginVertical: 5 },
@@ -160,7 +168,7 @@ const ShopNavigator = () => {
             ),
           }}
         />
-      </Drawer.Navigator>
+      </Drawer.Navigator> */}
     </NavigationContainer>
   );
 };
