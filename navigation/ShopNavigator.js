@@ -10,6 +10,7 @@ import ItemDetailsScreen from "../screens/shop/ItemDetailsScreen";
 import CartScreen from "../screens/shop/CartScreen";
 import OrdersScreen from "../screens/shop/OrdersScreen";
 import UserItemsScreen from "../screens/user/UserItemsScreen";
+import EditItemScreen from "../screens/user/EditItemScreen";
 import HeaderButton from "../components/ui/HeaderButton";
 import Colors from "../constants/Colors";
 
@@ -94,6 +95,33 @@ const UserStack = () => (
               onPress={() => {
                 navigation.toggleDrawer();
               }}
+            />
+          </HeaderButtons>
+        ),
+        headerRight: () => (
+          <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+              title="AddItem"
+              iconName="md-create"
+              onPress={() => {
+                navigation.navigate("EditItem");
+              }}
+            />
+          </HeaderButtons>
+        ),
+      })}
+    />
+    <Stack.Screen
+      name="EditItem"
+      component={EditItemScreen}
+      options={({ navigation, route }) => ({
+        headerTitle: route.params ? "Edit Item" : "Add Item",
+        headerRight: () => (
+          <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+              title="ConfirmEdit"
+              iconName="md-checkmark"
+              onPress={() => {}}
             />
           </HeaderButtons>
         ),
