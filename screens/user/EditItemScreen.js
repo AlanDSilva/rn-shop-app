@@ -1,14 +1,23 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, ScrollView, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  ScrollView,
+  View,
+  Button,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
+import Colors from "../../constants/Colors";
+
 const EditItemScreen = (props) => {
-  const itemId = props.route.params ? props.route.params.itemId : null;
+  const itemId = props.route.params?.itemId;
   const editedItem = useSelector((state) =>
     state.items.userItems.find((item) => item.id === itemId)
   );
 
-  const [title, seTtitle] = useState(editedItem ? editedItem.title : "");
+  const [title, setTitle] = useState(editedItem ? editedItem.title : "");
   const [description, setDescription] = useState(
     editedItem ? editedItem.description : ""
   );
@@ -83,6 +92,15 @@ const EditItemScreen = (props) => {
             style={styles.input}
             value={deliveryType}
             onChangeText={(text) => setDeliveryType(text)}
+          />
+        </View>
+        <View style={styles.formControl}>
+          <Button
+            color={Colors.primary}
+            title="Submit"
+            onPress={() => {
+              console.log("submitting");
+            }}
           />
         </View>
       </View>

@@ -115,16 +115,7 @@ const UserStack = () => (
       name="EditItem"
       component={EditItemScreen}
       options={({ navigation, route }) => ({
-        headerTitle: route.params ? "Edit Item" : "Add Item",
-        headerRight: () => (
-          <HeaderButtons HeaderButtonComponent={HeaderButton}>
-            <Item
-              title="ConfirmEdit"
-              iconName="md-checkmark"
-              onPress={() => {}}
-            />
-          </HeaderButtons>
-        ),
+        headerTitle: route.params?.itemId ? "Edit Item" : "Add Item",
       })}
     />
   </Stack.Navigator>
