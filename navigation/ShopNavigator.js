@@ -1,14 +1,82 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { Platform, Button } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { Ionicons } from "@expo/vector-icons";
 
 import ItemsScreen from "../screens/shop/ItemsScreen";
 import ItemDetailsScreen from "../screens/shop/ItemDetailsScreen";
 import CartScreen from "../screens/shop/CartScreen";
+import OrdersScreen from "../screens/shop/OrdersScreen";
 import HeaderButton from "../components/ui/HeaderButton";
+import Colors from "../constants/Colors";
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const ShopStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="Items"
+      component={ItemsScreen}
+      options={({ navigation }) => ({
+        headerTitle: "All items",
+        headerRight: () => (
+          <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+              title="Cart"
+              iconName="md-cart"
+              onPress={() => {
+                navigation.navigate("Cart");
+              }}
+            />
+          </HeaderButtons>
+        ),
+        headerLeft: () => (
+          <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+              title="Menu"
+              iconName="md-menu"
+              onPress={() => {
+                navigation.toggleDrawer();
+              }}
+            />
+          </HeaderButtons>
+        ),
+      })}
+    />
+    <Stack.Screen
+      name="Item Details"
+      component={ItemDetailsScreen}
+      options={({ route }) => ({ title: route.params.itemTitle })}
+    />
+    <Stack.Screen name="Cart" component={CartScreen} />
+  </Stack.Navigator>
+);
+
+const OrderStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="Orders"
+      component={OrdersScreen}
+      options={({ navigation }) => ({
+        headerTitle: "Your Orders",
+        headerLeft: () => (
+          <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+              title="Menu"
+              iconName="md-menu"
+              onPress={() => {
+                navigation.toggleDrawer();
+              }}
+            />
+          </HeaderButtons>
+        ),
+      })}
+    />
+  </Stack.Navigator>
+);
 
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -16,32 +84,31 @@ import { StyleSheet, Text, View } from "react-native";
 const ShopNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Items"
-          component={ItemsScreen}
-          options={({ navigation }) => ({
-            headerTitle: "All items",
-            headerRight: () => (
-              <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                <Item
-                  title="Cart"
-                  iconName="md-cart"
-                  onPress={() => {
-                    navigation.navigate("Cart");
-                  }}
-                />
-              </HeaderButtons>
+      <Drawer.Navigator
+        drawerContentOptions={{
+          activeTintColor: Colors.primary,
+          itemStyle: { marginVertical: 5 },
+        }}
+      >
+        <Drawer.Screen
+          name="Shop"
+          component={ShopStack}
+          options={{
+            drawerIcon: () => (
+              <Ionicons name="md-cart" size={23} color={Colors.primary} />
             ),
-          })}
+          }}
         />
-        <Stack.Screen
-          name="Item Details"
-          component={ItemDetailsScreen}
-          options={({ route }) => ({ title: route.params.itemTitle })}
+        <Drawer.Screen
+          name="Orders"
+          component={OrderStack}
+          options={{
+            drawerIcon: () => (
+              <Ionicons name="md-list" size={23} color={Colors.primary} />
+            ),
+          }}
         />
-        <Stack.Screen name="Cart" component={CartScreen} />
-      </Stack.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 };
