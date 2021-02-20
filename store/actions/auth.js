@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const SIGNUP = "SIGNUP";
+export const LOGIN = "LOGIN";
 
 export const signup = (username, name, password) => {
   return async (dispatch) => {
@@ -12,11 +13,15 @@ export const signup = (username, name, password) => {
       });
       const resData = response.data;
       console.log(resData);
+      dispatch({
+        type: SIGNUP,
+        token: resData.token,
+        username: resData.username,
+        name: resData.name,
+      });
     } catch (err) {
       console.log(err.response.data.error);
     }
-
-    // dispacth({type: SIGNUP})
   };
 };
 
@@ -29,10 +34,14 @@ export const login = (username, password) => {
       });
       const resData = response.data;
       console.log(resData);
+      dispatch({
+        type: LOGIN,
+        token: resData.token,
+        username: resData.username,
+        name: resData.name,
+      });
     } catch (err) {
       console.log(err.response.data.error);
     }
-
-    // dispacth({type: SIGNUP})
   };
 };

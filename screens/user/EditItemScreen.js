@@ -10,30 +10,37 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 
 import Colors from "../../constants/Colors";
+import * as itemsActions from "../../store/actions/items";
 
 const EditItemScreen = (props) => {
   const itemId = props.route.params?.itemId;
   const editedItem = useSelector((state) =>
-    state.items.userItems.find((item) => item.id === itemId)
+    state.items.userItems?.find((item) => item.id === itemId)
   );
 
-  const [title, setTitle] = useState(editedItem ? editedItem.title : "");
+  const [title, setTitle] = useState(editedItem ? editedItem.title : "ExTitle");
   const [description, setDescription] = useState(
     editedItem ? editedItem.description : ""
   );
   const [category, setCategory] = useState(
-    editedItem ? editedItem.category : ""
+    editedItem ? editedItem.category : "ExCategort"
   );
   const [location, setLocation] = useState(
     editedItem ? editedItem.location : ""
   );
-  const [image1, setImage1] = useState(editedItem ? editedItem.images[0] : "");
+  const [image, setImage] = useState(
+    editedItem
+      ? editedItem.image
+      : "https://www.marni.com/12/12386489MT_13_n_r.jpg"
+  );
   const [price, setPrice] = useState(
-    editedItem ? editedItem.price.toString() : ""
+    editedItem ? editedItem.price.toString() : "38"
   );
   const [deliveryType, setDeliveryType] = useState(
-    editedItem ? editedItem.deliveryType : ""
+    editedItem ? editedItem.deliveryType : "Shipping"
   );
+
+  const dispatch = useDispatch();
 
   return (
     <ScrollView>
@@ -79,11 +86,11 @@ const EditItemScreen = (props) => {
           />
         </View>
         <View style={styles.formControl}>
-          <Text style={styles.label}>Image1</Text>
+          <Text style={styles.label}>Image</Text>
           <TextInput
             style={styles.input}
-            value={image1}
-            onChangeText={(text) => setImage1(text)}
+            value={image}
+            onChangeText={(text) => setImage(text)}
           />
         </View>
         <View style={styles.formControl}>
@@ -100,6 +107,17 @@ const EditItemScreen = (props) => {
             title="Submit"
             onPress={() => {
               console.log("submitting");
+              dispatch(
+                itemsActions.createItem(
+                  title,
+                  description,
+                  category,
+                  location,
+                  image,
+                  price,
+                  deliveryType
+                )
+              );
             }}
           />
         </View>

@@ -1,9 +1,8 @@
-import ITEMS from "../../data/dummy-data";
-import { DELETE_ITEM, SET_ITEMS } from "../actions/items";
+import { DELETE_ITEM, SET_ITEMS, CREATE_ITEM } from "../actions/items";
 
 const initialState = {
-  availableItems: ITEMS,
-  userItems: ITEMS.filter((item) => item.user.id === "u1"),
+  availableItems: [],
+  userItems: [],
 };
 
 export default (state = initialState, action) => {
@@ -20,7 +19,18 @@ export default (state = initialState, action) => {
     case SET_ITEMS:
       console.log("Fetching items");
       return {
+        userItems: action.items.filter(
+          (item) => item.user.username === action.username
+        ),
         availableItems: action.items,
+      };
+
+    case CREATE_ITEM:
+      console.log("Creading item with payload: ", action.payload);
+
+      return {
+        availableItems: state.availableItems.concat(action.payload),
+        userItems: state.userItems.concat(action.payload),
       };
   }
   return state;

@@ -15,6 +15,8 @@ import AuthScreen from "../screens/user/AuthScreen";
 import HeaderButton from "../components/ui/HeaderButton";
 import Colors from "../constants/Colors";
 
+import { useSelector } from "react-redux";
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -132,43 +134,50 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 const ShopNavigator = () => {
+  const token = useSelector((state) => state.auth.token);
+
   return (
     <NavigationContainer>
-      <AuthStack />
-      {/* <Drawer.Navigator
-        drawerContentOptions={{
-          activeTintColor: Colors.primary,
-          itemStyle: { marginVertical: 5 },
-        }}
-      >
-        <Drawer.Screen
-          name="Shop"
-          component={ShopStack}
-          options={{
-            drawerIcon: () => (
-              <Ionicons name="md-cart" size={23} color={Colors.primary} />
-            ),
+      {token ? (
+        <Drawer.Navigator
+          drawerContentOptions={{
+            activeTintColor: Colors.primary,
+            itemStyle: { marginVertical: 5 },
           }}
-        />
-        <Drawer.Screen
-          name="Orders"
-          component={OrderStack}
-          options={{
-            drawerIcon: () => (
-              <Ionicons name="md-list" size={23} color={Colors.primary} />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="Admin"
-          component={UserStack}
-          options={{
-            drawerIcon: () => (
-              <Ionicons name="md-create" size={23} color={Colors.primary} />
-            ),
-          }}
-        />
-      </Drawer.Navigator> */}
+        >
+          <Drawer.Screen
+            name="Shop"
+            component={ShopStack}
+            options={{
+              drawerIcon: () => (
+                <Ionicons name="md-cart" size={23} color={Colors.primary} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="Orders"
+            component={OrderStack}
+            options={{
+              drawerIcon: () => (
+                <Ionicons name="md-list" size={23} color={Colors.primary} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="Admin"
+            component={UserStack}
+            options={{
+              drawerIcon: () => (
+                <Ionicons name="md-create" size={23} color={Colors.primary} />
+              ),
+            }}
+          />
+        </Drawer.Navigator>
+      ) : (
+        <AuthStack />
+      )}
+
+      {/*  */}
     </NavigationContainer>
   );
 };

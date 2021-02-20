@@ -7,28 +7,32 @@ import {
   ScrollView,
   TextInput,
   Button,
+  ActivityIndicator,
 } from "react-native";
 
 import { useDispatch } from "react-redux";
 import * as authActions from "../../store/actions/auth";
 
 const AuthScreen = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
 
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("User1");
   const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("User1");
 
   const dispatch = useDispatch();
 
-  const authHandler = () => {
+  const authHandler = async () => {
+    setIsLoading(true);
     if (isSignup) {
       console.log("Will signup with ", username, name, password);
-      dispatch(authActions.signup(username, name, password));
+      await dispatch(authActions.signup(username, name, password));
     } else {
       console.log("Will login with ", username, password);
-      dispatch(authActions.login(username, password));
+      await dispatch(authActions.login(username, password));
     }
+    setIsLoading(false);
   };
   return (
     <ScrollView>
@@ -58,7 +62,14 @@ const AuthScreen = (props) => {
           />
         </View>
         <View style={styles.formControl}>
-          <Button title={isSignup ? "Signup" : "Login"} onPress={authHandler} />
+          {isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <Button
+              title={isSignup ? "Signup" : "Login"}
+              onPress={authHandler}
+            />
+          )}
           <Button
             title={isSignup ? "Switch to Sign In" : "Switch to Sign up"}
             onPress={() => {
