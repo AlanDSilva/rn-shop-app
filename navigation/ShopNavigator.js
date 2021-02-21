@@ -124,7 +124,7 @@ const UserStack = () => (
   </Stack.Navigator>
 );
 
-const AuthStack = () => (
+export const AuthNavigator = () => (
   <Stack.Navigator>
     <Stack.Screen name="Auth" component={AuthScreen} />
   </Stack.Navigator>
@@ -133,55 +133,45 @@ const AuthStack = () => (
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const ShopNavigator = () => {
+export const ShopNavigator = () => {
   const token = useSelector((state) => state.auth.token);
 
   return (
-    <NavigationContainer>
-      {token ? (
-        <Drawer.Navigator
-          drawerContentOptions={{
-            activeTintColor: Colors.primary,
-            itemStyle: { marginVertical: 5 },
-          }}
-        >
-          <Drawer.Screen
-            name="Shop"
-            component={ShopStack}
-            options={{
-              drawerIcon: () => (
-                <Ionicons name="md-cart" size={23} color={Colors.primary} />
-              ),
-            }}
-          />
-          <Drawer.Screen
-            name="Orders"
-            component={OrderStack}
-            options={{
-              drawerIcon: () => (
-                <Ionicons name="md-list" size={23} color={Colors.primary} />
-              ),
-            }}
-          />
-          <Drawer.Screen
-            name="Admin"
-            component={UserStack}
-            options={{
-              drawerIcon: () => (
-                <Ionicons name="md-create" size={23} color={Colors.primary} />
-              ),
-            }}
-          />
-        </Drawer.Navigator>
-      ) : (
-        <AuthStack />
-      )}
-
-      {/*  */}
-    </NavigationContainer>
+    <Drawer.Navigator
+      drawerContentOptions={{
+        activeTintColor: Colors.primary,
+        itemStyle: { marginVertical: 5 },
+      }}
+    >
+      <Drawer.Screen
+        name="Shop"
+        component={ShopStack}
+        options={{
+          drawerIcon: () => (
+            <Ionicons name="md-cart" size={23} color={Colors.primary} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Orders"
+        component={OrderStack}
+        options={{
+          drawerIcon: () => (
+            <Ionicons name="md-list" size={23} color={Colors.primary} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Admin"
+        component={UserStack}
+        options={{
+          drawerIcon: () => (
+            <Ionicons name="md-create" size={23} color={Colors.primary} />
+          ),
+        }}
+      />
+    </Drawer.Navigator>
   );
 };
-
-export default ShopNavigator;
 
 const styles = StyleSheet.create({});
