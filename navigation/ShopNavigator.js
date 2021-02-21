@@ -1,5 +1,9 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+} from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { Platform, Button } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -12,10 +16,11 @@ import OrdersScreen from "../screens/shop/OrdersScreen";
 import UserItemsScreen from "../screens/user/UserItemsScreen";
 import EditItemScreen from "../screens/user/EditItemScreen";
 import AuthScreen from "../screens/user/AuthScreen";
+import * as authActions from "../store/actions/auth";
 import HeaderButton from "../components/ui/HeaderButton";
 import Colors from "../constants/Colors";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -135,12 +140,27 @@ import { StyleSheet, Text, View } from "react-native";
 
 export const ShopNavigator = () => {
   const token = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
 
   return (
     <Drawer.Navigator
       drawerContentOptions={{
         activeTintColor: Colors.primary,
         itemStyle: { marginVertical: 5 },
+      }}
+      drawerContent={(props) => {
+        return (
+          <DrawerContentScrollView {...props}>
+            <DrawerItemList {...props} />
+            <Button
+              title="Logout"
+              color={Colors.primary}
+              onPress={() => {
+                dispatch(authActions.logout());
+              }}
+            />
+          </DrawerContentScrollView>
+        );
       }}
     >
       <Drawer.Screen

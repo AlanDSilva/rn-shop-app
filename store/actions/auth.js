@@ -73,3 +73,10 @@ export const login = (username, password) => {
     }
   };
 };
+
+export const logout = () => {
+  return async (dispatch) => {
+    await AsyncStorage.removeItem("userData");
+    dispatch({ type: LOGOUT });
+  };
+};
