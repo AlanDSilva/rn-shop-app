@@ -7,6 +7,8 @@ export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const SET_DID_TRY_AL = "SET_DID_TRY_AL";
 
+const baseUrl = "http://192.168.43.141:3003/api";
+
 const saveDataToStorage = (token, username, name) => {
   AsyncStorage.setItem(
     "userData",
@@ -32,7 +34,7 @@ export const authenticate = (token, username, name) => {
 export const signup = (username, name, password) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post("http://localhost:3003/api/users", {
+      const response = await axios.post(`${baseUrl}/users`, {
         username: username,
         name: name,
         password: password,
@@ -55,7 +57,7 @@ export const signup = (username, name, password) => {
 export const login = (username, password) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post("http://localhost:3003/api/login", {
+      const response = await axios.post(`${baseUrl}/login`, {
         username: username,
         password: password,
       });

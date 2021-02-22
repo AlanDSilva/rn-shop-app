@@ -21,7 +21,7 @@ const ItemDetailsScreen = (props) => {
 
   return (
     <ScrollView>
-      <Image style={styles.image} source={{ uri: selectedItem.image }} />
+      <Image style={styles.image} source={{ uri: selectedItem.images[0] }} />
       <View style={styles.actions}>
         <Button
           color={Colors.primary}

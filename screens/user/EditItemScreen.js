@@ -6,11 +6,13 @@ import {
   ScrollView,
   View,
   Button,
+  Image,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import Colors from "../../constants/Colors";
 import * as itemsActions from "../../store/actions/items";
+import ImageSelector from "../../components/ui/ImageSelector";
 
 const EditItemScreen = (props) => {
   const itemId = props.route.params?.itemId;
@@ -33,6 +35,7 @@ const EditItemScreen = (props) => {
       ? editedItem.image
       : "https://www.marni.com/12/12386489MT_13_n_r.jpg"
   );
+  const [pickedImage, setPickedImage] = useState();
   const [price, setPrice] = useState(
     editedItem ? editedItem.price.toString() : "38"
   );
@@ -94,6 +97,18 @@ const EditItemScreen = (props) => {
           />
         </View>
         <View style={styles.formControl}>
+          <Text style={styles.label}>Image Selector</Text>
+          {!pickedImage ? (
+            <Text>No image picked yet.</Text>
+          ) : (
+            <View style={styles.imagePreview}>
+              <Image style={styles.image} source={{ uri: pickedImage.uri }} />
+            </View>
+          )}
+          <ImageSelector pictureTaken={(picUrl) => setPickedImage(picUrl)} />
+        </View>
+
+        <View style={styles.formControl}>
           <Text style={styles.label}>Delivery Type</Text>
           <TextInput
             style={styles.input}
@@ -114,6 +129,7 @@ const EditItemScreen = (props) => {
                   category,
                   location,
                   image,
+                  pickedImage,
                   price,
                   deliveryType
                 )
@@ -139,5 +155,18 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
+  },
+  imagePreview: {
+    width: "100%",
+    height: 100,
+    marginBottom: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "#ccc",
+    borderWidth: 1,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
   },
 });

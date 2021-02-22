@@ -4,9 +4,11 @@ export const DELETE_ITEM = "DELETE_ITEM";
 export const SET_ITEMS = "SET_ITEMS";
 export const CREATE_ITEM = "CREATE_ITEM";
 
+const baseUrl = "http://192.168.43.141:3003/api/items";
+
 export const fetchItems = () => {
   return async (dispatch, getState) => {
-    const response = await axios.get("http://localhost:3003/api/items");
+    const response = await axios.get(baseUrl);
     const resData = response.data;
     console.log("The fetch data: ", resData);
     console.log("The username: ", getState().auth.username);
@@ -24,6 +26,7 @@ export const createItem = (
   category,
   location,
   image,
+  pickedImage,
   price,
   deliveryType
 ) => {
@@ -31,6 +34,17 @@ export const createItem = (
     const username = getState().auth.username;
     const name = getState().auth.name;
     const token = `bearer ${getState().auth.token}`;
+
+    // -----
+    let postForm = new FormData();
+    postForm.append("title", title);
+    postForm.append("description", description);
+    postForm.append("category", category);
+    postForm.append("location", location);
+    postForm.append("image", pickedImage);
+    postForm.append("price", price);
+    postForm.append("deliveryType", deliveryType);
+    // ------
     const newItem = {
       title: title,
       description: description,
@@ -41,18 +55,16 @@ export const createItem = (
       deliveryType: deliveryType,
     };
     const config = {
-      headers: { Authorization: token },
+      headers: { Authorization: token, "Content-Type": "multipart/form-data" },
     };
     try {
-      const response = await axios.post(
-        "http://localhost:3003/api/items",
-        newItem,
-        config
-      );
+      const response = await axios.post(baseUrl, postForm, config);
 
-      const userId = response.data.item.user;
+      console.log("Response data", response.data);
+
+      const userId = response.data.user;
       const payload = {
-        ...response.data.item,
+        ...response.data,
         user: { id: userId, name: name, username: username },
       };
 
