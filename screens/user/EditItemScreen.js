@@ -22,13 +22,13 @@ const EditItemScreen = (props) => {
 
   const [title, setTitle] = useState(editedItem ? editedItem.title : "ExTitle");
   const [description, setDescription] = useState(
-    editedItem ? editedItem.description : ""
+    editedItem ? editedItem.description : "Description Example"
   );
   const [category, setCategory] = useState(
     editedItem ? editedItem.category : "ExCategort"
   );
   const [location, setLocation] = useState(
-    editedItem ? editedItem.location : ""
+    editedItem ? editedItem.location : "Location Example"
   );
   const [image, setImage] = useState(
     editedItem
@@ -36,6 +36,7 @@ const EditItemScreen = (props) => {
       : "https://www.marni.com/12/12386489MT_13_n_r.jpg"
   );
   const [pickedImage, setPickedImage] = useState();
+  const [pickedImage2, setPickedImage2] = useState();
   const [price, setPrice] = useState(
     editedItem ? editedItem.price.toString() : "38"
   );
@@ -107,6 +108,17 @@ const EditItemScreen = (props) => {
           )}
           <ImageSelector pictureTaken={(picUrl) => setPickedImage(picUrl)} />
         </View>
+        <View style={styles.formControl}>
+          <Text style={styles.label}>Image Selector</Text>
+          {!pickedImage2 ? (
+            <Text>No image picked yet.</Text>
+          ) : (
+            <View style={styles.imagePreview}>
+              <Image style={styles.image} source={{ uri: pickedImage2.uri }} />
+            </View>
+          )}
+          <ImageSelector pictureTaken={(picUrl) => setPickedImage2(picUrl)} />
+        </View>
 
         <View style={styles.formControl}>
           <Text style={styles.label}>Delivery Type</Text>
@@ -130,6 +142,7 @@ const EditItemScreen = (props) => {
                   location,
                   image,
                   pickedImage,
+                  pickedImage2,
                   price,
                   deliveryType
                 )

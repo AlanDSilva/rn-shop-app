@@ -27,6 +27,7 @@ export const createItem = (
   location,
   image,
   pickedImage,
+  pickedImage2,
   price,
   deliveryType
 ) => {
@@ -42,8 +43,11 @@ export const createItem = (
     postForm.append("category", category);
     postForm.append("location", location);
     postForm.append("image", pickedImage);
+    postForm.append("image", pickedImage2);
     postForm.append("price", price);
     postForm.append("deliveryType", deliveryType);
+
+    console.log("Postform: ", postForm);
     // ------
     const newItem = {
       title: title,
@@ -59,8 +63,6 @@ export const createItem = (
     };
     try {
       const response = await axios.post(baseUrl, postForm, config);
-
-      console.log("Response data", response.data);
 
       const userId = response.data.user;
       const payload = {
