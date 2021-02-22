@@ -28,8 +28,7 @@ const StartupScreen = (props) => {
   }, [dispatch]);
   return (
     <View style={styles.screen}>
-      {/* <ActivityIndicator size="large" color={Colors.primary} /> */}
-      <Text> Tis the startupscreen </Text>
+      <ActivityIndicator size="large" color={Colors.primary} />
     </View>
   );
 };
