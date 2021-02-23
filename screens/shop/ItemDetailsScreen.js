@@ -12,6 +12,8 @@ import { useSelector, useDispatch } from "react-redux";
 import Colors from "../../constants/Colors";
 import * as cartActions from "../../store/actions/cart";
 
+import CustomCarousel from "../../components/ui/CustomCarousel";
+
 const ItemDetailsScreen = (props) => {
   const { itemId } = props.route.params;
   const selectedItem = useSelector((state) =>
@@ -21,7 +23,7 @@ const ItemDetailsScreen = (props) => {
 
   return (
     <ScrollView>
-      <Image style={styles.image} source={{ uri: selectedItem.images[0] }} />
+      <CustomCarousel images={selectedItem.images} />
       <View style={styles.actions}>
         <Button
           color={Colors.primary}
