@@ -7,7 +7,8 @@ export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const SET_DID_TRY_AL = "SET_DID_TRY_AL";
 
-const baseUrl = "http://192.168.43.141:3003/api";
+// const baseUrl = "http://192.168.43.141:3003/api";
+const baseUrl = "http://172.20.10.2:3000/api";
 
 const saveDataToStorage = (token, username, name) => {
   AsyncStorage.setItem(

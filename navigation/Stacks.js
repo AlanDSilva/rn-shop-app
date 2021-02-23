@@ -9,6 +9,7 @@ import CartScreen from "../screens/shop/CartScreen";
 import AuthScreen from "../screens/user/AuthScreen";
 import UserItemsScreen from "../screens/user/UserItemsScreen";
 import EditItemScreen from "../screens/user/EditItemScreen";
+import MapScreen from "../screens/user/MapScreen";
 import HeaderButton from "../components/ui/HeaderButton";
 
 const Stack = createStackNavigator();
@@ -115,5 +116,6 @@ export const AdminStack = () => (
         headerTitle: route.params?.itemId ? "Edit Item" : "Add Item",
       })}
     />
+    <Stack.Screen name="Map" component={MapScreen} />
   </Stack.Navigator>
 );

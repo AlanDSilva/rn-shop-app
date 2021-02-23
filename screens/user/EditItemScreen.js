@@ -13,6 +13,9 @@ import { useSelector, useDispatch } from "react-redux";
 import Colors from "../../constants/Colors";
 import * as itemsActions from "../../store/actions/items";
 import ImageSelector from "../../components/ui/ImageSelector";
+import LocationSelector from "../../components/ui/LocationSelector";
+import MapPreview from "../../components/ui/MapPreview";
+import { pick } from "lodash";
 
 const EditItemScreen = (props) => {
   const itemId = props.route.params?.itemId;
@@ -30,6 +33,7 @@ const EditItemScreen = (props) => {
   const [location, setLocation] = useState(
     editedItem ? editedItem.location : "Location Example"
   );
+  const [pickedLocation, setPickedLocation] = useState();
   const [image, setImage] = useState(
     editedItem
       ? editedItem.image
@@ -121,6 +125,26 @@ const EditItemScreen = (props) => {
         </View>
 
         <View style={styles.formControl}>
+          <Text style={styles.label}>Location Selector</Text>
+          {!pickedLocation ? (
+            <Text>No location picked yet.</Text>
+          ) : (
+            <MapPreview
+              onOpenMap={() => {
+                props.navigation.navigate("Map");
+              }}
+              location={pickedLocation}
+            />
+          )}
+          <LocationSelector
+            onOpenMap={() => {
+              props.navigation.navigate("Map");
+            }}
+            locationChosen={(newLocation) => setPickedLocation(newLocation)}
+          />
+        </View>
+
+        <View style={styles.formControl}>
           <Text style={styles.label}>Delivery Type</Text>
           <TextInput
             style={styles.input}
@@ -181,5 +205,11 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
+  },
+  mapPreview: {
+    marginBottom: 10,
+    height: 100,
+    borderColor: "#ccc",
+    borderWidth: 1,
   },
 });
