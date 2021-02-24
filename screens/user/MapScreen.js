@@ -50,11 +50,7 @@ export default function MapScreen(props) {
   }
   return (
     <View style={styles.container}>
-      <MapView
-        region={myRegion}
-        style={styles.map}
-        onPress={selectLocationHandler}
-      >
+      <MapView style={styles.map} onPress={selectLocationHandler}>
         {markerCoordinates && (
           <Marker
             title="Picked Location"

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   StyleSheet,
   Text,
@@ -16,6 +17,7 @@ import ImageSelector from "../../components/ui/ImageSelector";
 import LocationSelector from "../../components/ui/LocationSelector";
 import MapPreview from "../../components/ui/MapPreview";
 import { pick } from "lodash";
+import env from "../../env";
 
 const EditItemScreen = (props) => {
   const itemId = props.route.params?.itemId;
@@ -54,6 +56,24 @@ const EditItemScreen = (props) => {
     }
   }, [props.route.params?.pickedLocation]);
 
+  useEffect(() => {
+    const getPlace = async () => {
+      console.log(pickedLocation);
+      const place = await axios.get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${pickedLocation.lon.toFixed(
+          3
+        )},${pickedLocation.lat.toFixed(3)}.json?types=address&access_token=${
+          env.MAPBOX_ACCESS_TOKEN
+        }`
+      );
+      console.log(place.data.features[0].place_name);
+      setLocation(place.data.features[0].place_name);
+    };
+    if (pickedLocation) {
+      getPlace();
+    }
+  }, [pickedLocation]);
+
   const dispatch = useDispatch();
 
   return (
@@ -83,14 +103,7 @@ const EditItemScreen = (props) => {
             onChangeText={(text) => setCategory(text)}
           />
         </View>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Location</Text>
-          <TextInput
-            style={styles.input}
-            value={location}
-            onChangeText={(text) => setLocation(text)}
-          />
-        </View>
+
         <View style={styles.formControl}>
           <Text style={styles.label}>Price</Text>
           <TextInput
@@ -131,7 +144,14 @@ const EditItemScreen = (props) => {
         </View>
 
         <View style={styles.formControl}>
-          <Text style={styles.label}>Location Selector</Text>
+          <Text style={styles.label}>Location</Text>
+          <TextInput
+            style={styles.input}
+            value={location}
+            onChangeText={(text) => setLocation(text)}
+          />
+        </View>
+        <View style={styles.formControl}>
           {!pickedLocation ? (
             <Text>No location picked yet.</Text>
           ) : (

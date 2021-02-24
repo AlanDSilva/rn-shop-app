@@ -44,7 +44,6 @@ const LocationSelector = ({ onOpenMap, locationChosen }) => {
     setIsFetching(false);
   };
 
-  const pickOnMapHandler = () => {};
   return (
     <View style={styles.locationPicker}>
       {isFetching ? (
