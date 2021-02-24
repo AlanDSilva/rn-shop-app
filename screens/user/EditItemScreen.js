@@ -48,6 +48,12 @@ const EditItemScreen = (props) => {
     editedItem ? editedItem.deliveryType : "Shipping"
   );
 
+  useEffect(() => {
+    if (props.route.params?.pickedLocation) {
+      setPickedLocation(props.route.params.pickedLocation);
+    }
+  }, [props.route.params?.pickedLocation]);
+
   const dispatch = useDispatch();
 
   return (

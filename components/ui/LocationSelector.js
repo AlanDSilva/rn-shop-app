@@ -10,7 +10,7 @@ import * as Location from "expo-location";
 
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
-const LocationSelector = ({ onOpenMap }) => {
+const LocationSelector = ({ onOpenMap, locationChosen }) => {
   const [isFetching, setIsFetching] = useState(false);
   const verifyPermissions = async () => {
     const { status } = await Location.requestPermissionsAsync();
@@ -31,8 +31,9 @@ const LocationSelector = ({ onOpenMap }) => {
     try {
       setIsFetching(true);
       const location = await Location.getCurrentPositionAsync({
-        timeout: 5000,
+        timeout: 8000,
       });
+      console.log(location);
       locationChosen({
         lat: location.coords.latitude,
         lon: location.coords.longitude,
