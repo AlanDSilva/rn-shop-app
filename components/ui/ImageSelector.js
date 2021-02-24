@@ -1,11 +1,11 @@
-import { take } from "lodash";
-import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, Image } from "react-native";
+import React from "react";
+import { StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { Ionicons } from "@expo/vector-icons";
 
 import Colors from "../../constants/Colors";
 
-const ImageSelector = ({ pictureTaken }) => {
+const ImageSelector = ({ pictureTaken, pickedImage }) => {
   const verifyPermissions = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== "granted") {
@@ -38,13 +38,13 @@ const ImageSelector = ({ pictureTaken }) => {
     pictureTaken(picData);
   };
   return (
-    <View style={styles.imagePicker}>
-      <Button
-        title="Take Image"
-        color={Colors.primary}
-        onPress={takeImageHandler}
-      />
-    </View>
+    <TouchableOpacity onPress={takeImageHandler} style={styles.imagePreview}>
+      {!pickedImage ? (
+        <Ionicons name="md-camera" size={50} color={Colors.primary} />
+      ) : (
+        <Image style={styles.image} source={{ uri: pickedImage.uri }} />
+      )}
+    </TouchableOpacity>
   );
 };
 
@@ -52,12 +52,13 @@ export default ImageSelector;
 
 const styles = StyleSheet.create({
   imagePicker: {
+    flexDirection: "row",
     alignItems: "center",
   },
   imagePreview: {
-    width: "100%",
+    width: "50%",
     height: 100,
-    marginBottom: 10,
+    margin: 10,
     justifyContent: "center",
     alignItems: "center",
     borderColor: "#ccc",

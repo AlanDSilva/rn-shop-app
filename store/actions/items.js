@@ -26,7 +26,6 @@ export const createItem = (
   description,
   category,
   location,
-  image,
   pickedImage,
   pickedImage2,
   price,
@@ -50,15 +49,6 @@ export const createItem = (
 
     console.log("Postform: ", postForm);
     // ------
-    const newItem = {
-      title: title,
-      description: description,
-      category: category,
-      location: location,
-      image: image,
-      price: price,
-      deliveryType: deliveryType,
-    };
     const config = {
       headers: { Authorization: token, "Content-Type": "multipart/form-data" },
     };

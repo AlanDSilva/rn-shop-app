@@ -16,8 +16,8 @@ import * as itemsActions from "../../store/actions/items";
 import ImageSelector from "../../components/ui/ImageSelector";
 import LocationSelector from "../../components/ui/LocationSelector";
 import MapPreview from "../../components/ui/MapPreview";
-import { pick } from "lodash";
 import env from "../../env";
+import useField from "../../hooks/useField";
 
 const EditItemScreen = (props) => {
   const itemId = props.route.params?.itemId;
@@ -25,30 +25,16 @@ const EditItemScreen = (props) => {
     state.items.userItems?.find((item) => item.id === itemId)
   );
 
-  const [title, setTitle] = useState(editedItem ? editedItem.title : "ExTitle");
-  const [description, setDescription] = useState(
-    editedItem ? editedItem.description : "Description Example"
-  );
-  const [category, setCategory] = useState(
-    editedItem ? editedItem.category : "ExCategort"
-  );
-  const [location, setLocation] = useState(
-    editedItem ? editedItem.location : "Location Example"
-  );
+  const title = useField(editedItem?.title);
+  const description = useField(editedItem?.description);
+  const category = useField(editedItem?.category);
+  const price = useField(editedItem?.price.toString());
+  const location = useField(editedItem?.location);
+  const deliveryType = useField(editedItem?.deliveryType);
   const [pickedLocation, setPickedLocation] = useState();
-  const [image, setImage] = useState(
-    editedItem
-      ? editedItem.image
-      : "https://www.marni.com/12/12386489MT_13_n_r.jpg"
-  );
+
   const [pickedImage, setPickedImage] = useState();
   const [pickedImage2, setPickedImage2] = useState();
-  const [price, setPrice] = useState(
-    editedItem ? editedItem.price.toString() : "38"
-  );
-  const [deliveryType, setDeliveryType] = useState(
-    editedItem ? editedItem.deliveryType : "Shipping"
-  );
 
   useEffect(() => {
     if (props.route.params?.pickedLocation) {
@@ -67,7 +53,7 @@ const EditItemScreen = (props) => {
         }`
       );
       console.log(place.data.features[0].place_name);
-      setLocation(place.data.features[0].place_name);
+      location.onChangeText(place.data.features[0].place_name);
     };
     if (pickedLocation) {
       getPlace();
@@ -81,87 +67,47 @@ const EditItemScreen = (props) => {
       <View style={styles.form}>
         <View style={styles.formControl}>
           <Text style={styles.label}>Title</Text>
-          <TextInput
-            style={styles.input}
-            value={title}
-            onChangeText={(text) => setTitle(text)}
-          />
+          <TextInput style={styles.input} {...title} />
         </View>
         <View style={styles.formControl}>
           <Text style={styles.label}>Description</Text>
-          <TextInput
-            style={styles.input}
-            value={description}
-            onChangeText={(text) => setDescription(text)}
-          />
+          <TextInput style={styles.input} {...description} />
         </View>
         <View style={styles.formControl}>
           <Text style={styles.label}>Category</Text>
-          <TextInput
-            style={styles.input}
-            value={category}
-            onChangeText={(text) => setCategory(text)}
-          />
+          <TextInput style={styles.input} {...category} />
+        </View>
+        <View style={styles.formControl}>
+          <Text style={styles.label}>Price</Text>
+          <TextInput style={styles.input} {...price} />
         </View>
 
         <View style={styles.formControl}>
-          <Text style={styles.label}>Price</Text>
-          <TextInput
-            style={styles.input}
-            value={price}
-            onChangeText={(text) => setPrice(text)}
-          />
-        </View>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Image</Text>
-          <TextInput
-            style={styles.input}
-            value={image}
-            onChangeText={(text) => setImage(text)}
-          />
-        </View>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Image Selector</Text>
-          {!pickedImage ? (
-            <Text>No image picked yet.</Text>
-          ) : (
-            <View style={styles.imagePreview}>
-              <Image style={styles.image} source={{ uri: pickedImage.uri }} />
-            </View>
-          )}
-          <ImageSelector pictureTaken={(picUrl) => setPickedImage(picUrl)} />
-        </View>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Image Selector</Text>
-          {!pickedImage2 ? (
-            <Text>No image picked yet.</Text>
-          ) : (
-            <View style={styles.imagePreview}>
-              <Image style={styles.image} source={{ uri: pickedImage2.uri }} />
-            </View>
-          )}
-          <ImageSelector pictureTaken={(picUrl) => setPickedImage2(picUrl)} />
+          <Text style={styles.label}>Images Selector</Text>
+          <View style={styles.imagesPicker}>
+            <ImageSelector
+              pickedImage={pickedImage}
+              pictureTaken={(picUrl) => setPickedImage(picUrl)}
+            />
+            <ImageSelector
+              pickedImage={pickedImage2}
+              pictureTaken={(picUrl) => setPickedImage2(picUrl)}
+            />
+          </View>
         </View>
 
         <View style={styles.formControl}>
           <Text style={styles.label}>Location</Text>
-          <TextInput
-            style={styles.input}
-            value={location}
-            onChangeText={(text) => setLocation(text)}
-          />
+          <TextInput style={styles.input} {...location} />
         </View>
         <View style={styles.formControl}>
-          {!pickedLocation ? (
-            <Text>No location picked yet.</Text>
-          ) : (
-            <MapPreview
-              onOpenMap={() => {
-                props.navigation.navigate("Map");
-              }}
-              location={pickedLocation}
-            />
-          )}
+          <MapPreview
+            onOpenMap={() => {
+              props.navigation.navigate("Map");
+            }}
+            location={pickedLocation}
+          />
+
           <LocationSelector
             onOpenMap={() => {
               props.navigation.navigate("Map");
@@ -172,11 +118,7 @@ const EditItemScreen = (props) => {
 
         <View style={styles.formControl}>
           <Text style={styles.label}>Delivery Type</Text>
-          <TextInput
-            style={styles.input}
-            value={deliveryType}
-            onChangeText={(text) => setDeliveryType(text)}
-          />
+          <TextInput style={styles.input} {...deliveryType} />
         </View>
         <View style={styles.formControl}>
           <Button
@@ -186,15 +128,14 @@ const EditItemScreen = (props) => {
               console.log("submitting");
               dispatch(
                 itemsActions.createItem(
-                  title,
-                  description,
-                  category,
-                  location,
-                  image,
+                  title.value,
+                  description.value,
+                  category.value,
+                  location.value,
                   pickedImage,
                   pickedImage2,
-                  price,
-                  deliveryType
+                  price.value,
+                  deliveryType.value
                 )
               );
             }}
@@ -220,9 +161,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   imagePreview: {
-    width: "100%",
+    width: "50%",
     height: 100,
-    marginBottom: 10,
+    margin: 10,
     justifyContent: "center",
     alignItems: "center",
     borderColor: "#ccc",
@@ -231,11 +172,17 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
+    padding: 10,
+    margin: 10,
   },
   mapPreview: {
     marginBottom: 10,
     height: 100,
     borderColor: "#ccc",
     borderWidth: 1,
+  },
+  imagesPicker: {
+    flexDirection: "row",
+    justifyContent: "center",
   },
 });
