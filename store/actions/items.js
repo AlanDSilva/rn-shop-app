@@ -7,7 +7,7 @@ export const CREATE_ITEM = "CREATE_ITEM";
 // const baseUrl = "http://192.168.43.141:3003/api/items";
 const baseUrl = "http://172.20.10.2:3000/api/items";
 
-export const fetchItems = () => {
+export const fetchItems = (cat, loc, oPrice, oDate) => {
   return async (dispatch, getState) => {
     const response = await axios.get(baseUrl);
     const resData = response.data;
