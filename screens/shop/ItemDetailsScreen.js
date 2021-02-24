@@ -35,6 +35,12 @@ const ItemDetailsScreen = (props) => {
       </View>
 
       <Text style={styles.price}>€{selectedItem.price.toFixed(2)}</Text>
+      <Text style={styles.price}>{selectedItem.location}</Text>
+      <Text style={styles.price}>
+        {selectedItem.date.split("T").shift()} at{" "}
+        {selectedItem.date.split("T").pop().split(".").shift()} by{" "}
+        {selectedItem.user.username}
+      </Text>
       <Text style={styles.description}>{selectedItem.description}</Text>
     </ScrollView>
   );
@@ -55,7 +61,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#888",
     textAlign: "center",
-    marginVertical: 20,
+    marginVertical: 5,
   },
   description: {
     fontSize: 14,

@@ -9,21 +9,19 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import RNPickerSelect from "react-native-picker-select";
-import { SearchBar } from "react-native-elements";
 
 import ProductItem from "../../components/shop/ProductItem";
 import * as cartActions from "../../store/actions/cart";
 import * as itemsActions from "../../store/actions/items";
 
 import Colors from "../../constants/Colors";
-import { set } from "lodash";
 
 const CustomSearchBar = ({ setCat, setLoc, setOPrice, setODate }) => {
   return (
     <View style={styles.searchContainer}>
       <View style={styles.pickerContainer}>
         <RNPickerSelect
-          placeholder={{ label: "category" }}
+          placeholder={{ label: "Category" }}
           onValueChange={(value) => {
             setCat(value);
           }}
@@ -90,7 +88,7 @@ const ItemsScreen = (props) => {
   useEffect(() => {
     const loadItems = async () => {
       setIsLoading(true);
-      await dispatch(itemsActions.fetchItems());
+      await dispatch(itemsActions.fetchItems(cat, loc, oPrice, oDate));
       setIsLoading(false);
     };
     loadItems();
@@ -102,22 +100,6 @@ const ItemsScreen = (props) => {
       itemTitle: title,
     });
   };
-
-  // if (isLoading) {
-  //   return (
-  //     <View style={styles.centered}>
-  //       <ActivityIndicator size="large" color={Colors.primary} />
-  //     </View>
-  //   );
-  // }
-
-  // if (!isLoading && products.length === 0) {
-  //   return (
-  //     <View style={styles.centered}>
-  //       <Text>No products found! Maybe start adding some!</Text>
-  //     </View>
-  //   );
-  // }
 
   return (
     <View>
@@ -133,7 +115,7 @@ const ItemsScreen = (props) => {
         </View>
       ) : !isLoading && products.length === 0 ? (
         <View style={styles.centered}>
-          <Text>No products found! Maybe start adding some!</Text>{" "}
+          <Text>No products found! Maybe start adding some!</Text>
         </View>
       ) : (
         <FlatList
@@ -162,6 +144,7 @@ const ItemsScreen = (props) => {
               />
             </ProductItem>
           )}
+          numColumns={2}
         />
       )}
     </View>

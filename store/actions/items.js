@@ -4,15 +4,22 @@ export const DELETE_ITEM = "DELETE_ITEM";
 export const SET_ITEMS = "SET_ITEMS";
 export const CREATE_ITEM = "CREATE_ITEM";
 
-// const baseUrl = "http://192.168.43.141:3003/api/items";
-const baseUrl = "http://172.20.10.2:3000/api/items";
+const baseUrl = "http://192.168.43.141:3000/api/items";
+//const baseUrl = "http://172.20.10.2:3000/api/items";
 
 export const fetchItems = (cat, loc, oPrice, oDate) => {
+  console.log(cat, loc, oPrice, oDate);
+  const params = {
+    oPrice: oPrice,
+    oDate: oDate,
+    location: loc,
+    category: cat,
+  };
+
   return async (dispatch, getState) => {
-    const response = await axios.get(baseUrl);
+    const response = await axios.get(baseUrl, { params });
     const resData = response.data;
-    console.log("The fetch data: ", resData);
-    console.log("The username: ", getState().auth.username);
+
     dispatch({
       type: SET_ITEMS,
       items: resData,

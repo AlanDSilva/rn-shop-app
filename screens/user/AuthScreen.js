@@ -56,6 +56,7 @@ const AuthScreen = (props) => {
         <View style={styles.formControl}>
           <Text style={styles.label}>Password</Text>
           <TextInput
+            secureTextEntry={true}
             style={styles.input}
             value={password}
             onChangeText={(text) => setPassword(text)}

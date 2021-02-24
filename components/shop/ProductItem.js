@@ -23,8 +23,16 @@ const ProductItem = (props) => {
               <Image style={styles.image} source={{ uri: props.images[0] }} />
             </View>
             <View style={styles.details}>
-              <Text style={styles.title}>{props.title}</Text>
-              <Text style={styles.price}>€{props.price.toFixed(2)}</Text>
+              <View style={styles.row}>
+                <Text style={styles.title}>{props.title}</Text>
+                <Text style={styles.price}>€{props.price.toFixed(2)}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.small}>
+                  {props.date.split("T").shift()} by
+                </Text>
+                <Text style={styles.price}>{props.user.username}</Text>
+              </View>
             </View>
             <View style={styles.actions}>{props.children}</View>
           </View>
@@ -45,7 +53,8 @@ const styles = StyleSheet.create({
     elevation: 5, // ELEVATION ONLY WORKS ON android
     borderRadius: 10,
     backgroundColor: "white",
-    height: 300,
+    width: "40%",
+    height: 280,
     margin: 20,
   },
   touchable: {
@@ -81,6 +90,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     height: "22%",
-    paddingHorizontal: 20,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  small: {
+    fontSize: 8,
+    color: "#888",
   },
 });
