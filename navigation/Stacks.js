@@ -13,6 +13,7 @@ import MapScreen from "../screens/user/MapScreen";
 import HeaderButton from "../components/ui/HeaderButton";
 
 import Onboarding from "../screens/authentication/Onboarding/Onboarding";
+import Login from "../screens/authentication/Login/Login";
 
 const Stack = createStackNavigator();
 
@@ -60,6 +61,7 @@ export const ShopStack = () => {
 
 export const AuthStack = () => (
   <Stack.Navigator headerMode="none">
+    <Stack.Screen name="Login" component={Login} />
     <Stack.Screen name="Onboarding" component={Onboarding} />
     <Stack.Screen
       name="Auth"
