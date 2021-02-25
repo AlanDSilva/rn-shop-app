@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 
 import * as Styles from "../../constants/Styles";
 import Colors from "../../constants/Colors";
+import Header from "./Header";
 
 const { width } = Dimensions.get("window");
 const aspectRation = 750 / 1125;
@@ -15,6 +16,15 @@ const Container = (props) => {
           <Image
             source={require("/Users/alan/localProjects/rn-shop-app/assets/patterns/backgroud_pattern.jpg")}
             style={styles.headerImage}
+          />
+          <Header
+            left={{
+              icon: "menu",
+              onPress: () => {
+                props.navigation.openDrawer();
+              },
+            }}
+            title={"SignUp"}
           />
         </View>
       </View>

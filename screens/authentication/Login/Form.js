@@ -4,7 +4,7 @@ import { Feather } from "@expo/vector-icons";
 
 import Colors from "../../../constants/Colors";
 
-export const TextField = ({ placeholder, icon }) => {
+export const TextField = ({ placeholder, icon, field }) => {
   return (
     <View
       style={{
@@ -20,7 +20,11 @@ export const TextField = ({ placeholder, icon }) => {
       }}
     >
       <Feather name={icon} size={24} color={Colors.primary} />
-      <TextInput style={{ width: "90%", height: 48 }} {...{ placeholder }} />
+      <TextInput
+        style={{ width: "90%", height: 48 }}
+        {...{ placeholder }}
+        {...field}
+      />
     </View>
   );
 };

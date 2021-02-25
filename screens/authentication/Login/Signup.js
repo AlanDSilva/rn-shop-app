@@ -17,17 +17,25 @@ import { useDispatch } from "react-redux";
 import * as authActions from "../../../store/actions/auth";
 import useField from "../../../hooks/useField";
 
-const Login = ({ navigation }) => {
+const Signup = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const username = useField("");
+  const name = useField("");
   const password = useField("");
 
   const authHandler = async () => {
     setIsLoading(true);
-    console.log("Will signup with ", username.value, password.value);
+    console.log(
+      "Will signup with ",
+      username.value,
+      name.value,
+      password.value
+    );
     try {
-      await dispatch(authActions.login(username.value, password.value));
+      await dispatch(
+        authActions.signup(username.value, name.value, password.value)
+      );
     } catch (err) {
       alert(err.data.error);
     }
@@ -37,11 +45,11 @@ const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   const footer = (
     <View style={styles.footerText}>
-      <Text style={{ color: "white" }}>Don't have an account?</Text>
+      <Text style={{ color: "white" }}>Already have an account?</Text>
       <RNButton
-        title="Sign Up Here"
+        title="Sign In Here"
         onPress={() => {
-          navigation.navigate("Signup");
+          navigation.navigate("Login");
         }}
       />
     </View>
@@ -61,6 +69,7 @@ const Login = ({ navigation }) => {
             placeholder="Enter your Username"
             field={username}
           />
+          <TextField icon="edit-2" placeholder="Enter your Name" field={name} />
           <TextField
             icon="lock"
             placeholder="Enter your Password"
@@ -72,7 +81,7 @@ const Login = ({ navigation }) => {
         ) : (
           <Button
             style={{ paddingTop: 20 }}
-            label="Log into your account"
+            label="Sing up your account"
             variant="primary"
             onPress={authHandler}
           />
@@ -82,7 +91,7 @@ const Login = ({ navigation }) => {
   );
 };
 
-export default Login;
+export default Signup;
 
 const styles = StyleSheet.create({
   footerText: {

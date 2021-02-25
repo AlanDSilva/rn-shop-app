@@ -50,7 +50,7 @@ export const signup = (username, name, password) => {
       });
       saveDataToStorage(resData.token, resData.username, resData.name);
     } catch (err) {
-      console.log(err.response.data.error);
+      throw err.response;
     }
   };
 };
@@ -72,7 +72,7 @@ export const login = (username, password) => {
       });
       saveDataToStorage(resData.token, resData.username, resData.name);
     } catch (err) {
-      console.log(err.response.data.error);
+      throw err.response;
     }
   };
 };

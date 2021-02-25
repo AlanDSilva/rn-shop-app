@@ -14,8 +14,18 @@ import HeaderButton from "../components/ui/HeaderButton";
 
 import Onboarding from "../screens/authentication/Onboarding/Onboarding";
 import Login from "../screens/authentication/Login/Login";
+import Signup from "../screens/authentication/Login/Signup";
+import DiscoverScreen from "../screens/shop/DiscoverScreen";
 
 const Stack = createStackNavigator();
+
+export const DiscoverStack = () => {
+  return (
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen name="Discover" component={DiscoverScreen} />
+    </Stack.Navigator>
+  );
+};
 
 export const ShopStack = () => {
   return (
@@ -61,6 +71,7 @@ export const ShopStack = () => {
 
 export const AuthStack = () => (
   <Stack.Navigator headerMode="none">
+    <Stack.Screen name="Signup" component={Signup} />
     <Stack.Screen name="Login" component={Login} />
     <Stack.Screen name="Onboarding" component={Onboarding} />
     <Stack.Screen
