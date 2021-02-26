@@ -1,44 +1,43 @@
 import React from "react";
-import { Button, Text } from "react-native";
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from "@react-navigation/drawer";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 
 import { ShopStack, AdminStack } from "./Stacks";
 import Colors from "../constants/Colors";
 import * as authActions from "../store/actions/auth";
+import DrawerContent from "./Drawer/Drawer";
 
 const Drawer = createDrawerNavigator();
+
+const items = [
+  {
+    name: "list",
+    label: "Shop",
+    screen: "Shop",
+    backgroundColor: Colors.primary,
+  },
+  {
+    name: "heart",
+    label: "My Products",
+    screen: "My Products",
+    backgroundColor: "pink",
+  },
+  {
+    name: "log-out",
+    label: "Logout",
+    screen: "",
+    backgroundColor: "black",
+  },
+];
 
 const AuthorizedNavigator = () => {
   const dispatch = useDispatch();
   return (
     <Drawer.Navigator
-      drawerContentOptions={{
-        activeTintColor: Colors.primary,
-        itemStyle: { marginVertical: 5 },
-      }}
-      drawerContent={(props) => {
-        return (
-          <DrawerContentScrollView {...props}>
-            <DrawerItemList {...props} />
-            <DrawerItem
-              label="Logout"
-              icon={() => (
-                <MaterialIcons name="logout" size={23} color={Colors.primary} />
-              )}
-              onPress={() => {
-                dispatch(authActions.logout());
-              }}
-            />
-          </DrawerContentScrollView>
-        );
-      }}
+      drawerContent={({ navigation }) => (
+        <DrawerContent navigation={navigation} items={items} />
+      )}
     >
       <Drawer.Screen
         name="Shop"

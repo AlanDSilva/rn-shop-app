@@ -4,16 +4,31 @@ import { Ionicons, FontAwesome } from "@expo/vector-icons";
 
 import { ShopStack, AuthStack } from "./Stacks";
 import Colors from "../constants/Colors";
+import DrawerContent from "./Drawer/Drawer";
 
 const Drawer = createDrawerNavigator();
+
+const items = [
+  {
+    name: "list",
+    label: "Shop",
+    screen: "Shop",
+    backgroundColor: Colors.primary,
+  },
+  {
+    name: "user",
+    label: "Login",
+    screen: "Login",
+    backgroundColor: "orange",
+  },
+];
 
 const UnauthNavigator = () => {
   return (
     <Drawer.Navigator
-      drawerContentOptions={{
-        activeTintColor: Colors.primary,
-        itemStyle: { marginVertical: 5 },
-      }}
+      drawerContent={({ navigation }) => (
+        <DrawerContent navigation={navigation} items={items} />
+      )}
     >
       <Drawer.Screen
         name="Shop"
