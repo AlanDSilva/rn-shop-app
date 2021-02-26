@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Animated } from "react-native";
 
 import Button from "../../../components/ui/Button";
 
-const Subslide = ({ subtitle, description, last, onPress }) => {
+const Subslide = ({ subtitle, description, last, onPress, tryLogin }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.subtitle}>{subtitle}</Text>
@@ -11,7 +11,7 @@ const Subslide = ({ subtitle, description, last, onPress }) => {
       <Button
         label={last ? "Lets do it!" : "Next"}
         variant={last ? "primary" : "default"}
-        {...{ onPress }}
+        onPress={last ? tryLogin : onPress}
       />
     </View>
   );

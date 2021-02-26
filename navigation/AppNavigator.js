@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 
 import StartupScreen from "../screens/StartupScreen";
+import Onboarding from "../screens/authentication/Onboarding/Onboarding";
 
 // ----------------------------------------------------------------
 import UnauthNavigator from "./UnauthNavigator";
@@ -19,7 +20,7 @@ export default function AppNavigator(props) {
     <NavigationContainer>
       {isAuth && <AuthorizedNavigator />}
       {!isAuth && didTryAutoLogin && <UnauthNavigator />}
-      {!isAuth && !didTryAutoLogin && <StartupScreen />}
+      {!isAuth && !didTryAutoLogin && <Onboarding />}
     </NavigationContainer>
   );
 }

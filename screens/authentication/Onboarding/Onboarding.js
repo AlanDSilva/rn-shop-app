@@ -1,8 +1,18 @@
-import React, { useRef } from "react";
-import { StyleSheet, Text, View, Dimensions, Animated } from "react-native";
+import React, { useRef, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Animated,
+  ActivityIndicator,
+} from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
+import { useDispatch } from "react-redux";
 
 import Slide, { SLIDE_HEIGHT } from "./Slide";
 import Subslide from "./Subslide";
+import * as authActions from "../../../store/actions/auth";
 
 const BORDER_RADIUS = 75;
 const { width, height } = Dimensions.get("window");
@@ -36,6 +46,25 @@ const Onboarding = () => {
     inputRange: slides.map((_, i) => i * width),
     outputRange: slides.map((slide) => slide.color),
   });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const tryLogin = async () => {
+    setIsLoading(true);
+    try {
+      const userData = await AsyncStorage.getItem("userData");
+      if (!userData) {
+        dispatch(authActions.setDidTryAL());
+        return;
+      }
+      const transformedData = JSON.parse(userData);
+      const { token, username, name } = transformedData;
+      dispatch(authActions.authenticate(token, username, name));
+    } catch (err) {
+      console.error(err);
+    }
+    setIsLoading(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -80,19 +109,24 @@ const Onboarding = () => {
             },
           ]}
         >
-          {slides.map(({ subtitle, description }, index) => (
-            <Subslide
-              key={index}
-              last={index === slides.length - 1}
-              {...{ subtitle, description }}
-              onPress={() => {
-                scroll.current.scrollTo({
-                  x: width * (index + 1),
-                  animated: true,
-                });
-              }}
-            />
-          ))}
+          {!isLoading ? (
+            slides.map(({ subtitle, description }, index) => (
+              <Subslide
+                key={index}
+                last={index === slides.length - 1}
+                {...{ subtitle, description }}
+                onPress={() => {
+                  scroll.current.scrollTo({
+                    x: width * (index + 1),
+                    animated: true,
+                  });
+                }}
+                tryLogin={tryLogin}
+              />
+            ))
+          ) : (
+            <ActivityIndicator />
+          )}
         </Animated.View>
       </View>
     </View>
