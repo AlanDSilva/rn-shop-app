@@ -11,8 +11,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Colors from "../../constants/Colors";
 import * as cartActions from "../../store/actions/cart";
-
 import CustomCarousel from "../../components/ui/CustomCarousel";
+import Header from "../../components/ui/Header";
 
 const ItemDetailsScreen = (props) => {
   const { itemId } = props.route.params;
@@ -22,27 +22,41 @@ const ItemDetailsScreen = (props) => {
   const dispatch = useDispatch();
 
   return (
-    <ScrollView>
-      <CustomCarousel images={selectedItem.images} />
-      <View style={styles.actions}>
-        <Button
-          color={Colors.primary}
-          title="Add to Cart"
-          onPress={() => {
-            dispatch(cartActions.addToCart(selectedItem));
-          }}
-        />
-      </View>
+    <View>
+      <Header
+        left={{
+          icon: "arrow-left",
+          onPress: () => {
+            props.navigation.goBack();
+          },
+        }}
+        title={selectedItem.title}
+      />
 
-      <Text style={styles.price}>€{selectedItem.price.toFixed(2)}</Text>
-      <Text style={styles.price}>{selectedItem.location}</Text>
-      <Text style={styles.price}>
-        {selectedItem.date.split("T").shift()} at{" "}
-        {selectedItem.date.split("T").pop().split(".").shift()} by{" "}
-        {selectedItem.user.username}
-      </Text>
-      <Text style={styles.description}>{selectedItem.description}</Text>
-    </ScrollView>
+      <View style={{ marginTop: 100 }}>
+        <ScrollView>
+          <CustomCarousel images={selectedItem.images} />
+          <View style={styles.actions}>
+            <Button
+              color={Colors.primary}
+              title="Add to Cart"
+              onPress={() => {
+                dispatch(cartActions.addToCart(selectedItem));
+              }}
+            />
+          </View>
+
+          <Text style={styles.price}>€{selectedItem.price.toFixed(2)}</Text>
+          <Text style={styles.price}>{selectedItem.location}</Text>
+          <Text style={styles.price}>
+            {selectedItem.date.split("T").shift()} at{" "}
+            {selectedItem.date.split("T").pop().split(".").shift()} by{" "}
+            {selectedItem.user.username}
+          </Text>
+          <Text style={styles.description}>{selectedItem.description}</Text>
+        </ScrollView>
+      </View>
+    </View>
   );
 };
 
