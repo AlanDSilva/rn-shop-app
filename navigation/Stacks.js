@@ -1,64 +1,23 @@
 import React from "react";
-import { View, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import ItemsScreen from "../screens/shop/ItemsScreen";
 import ItemDetailsScreen from "../screens/shop/ItemDetailsScreen";
 import CartScreen from "../screens/shop/CartScreen";
-import AuthScreen from "../screens/user/AuthScreen";
 import UserItemsScreen from "../screens/user/UserItemsScreen";
 import EditItemScreen from "../screens/user/EditItemScreen";
 import MapScreen from "../screens/user/MapScreen";
-import HeaderButton from "../components/ui/HeaderButton";
 
 import Onboarding from "../screens/authentication/Onboarding/Onboarding";
 import Login from "../screens/authentication/Login/Login";
 import Signup from "../screens/authentication/Login/Signup";
-import DiscoverScreen from "../screens/shop/DiscoverScreen";
 
 const Stack = createStackNavigator();
 
-export const DiscoverStack = () => {
-  return (
-    <Stack.Navigator headerMode="none">
-      <Stack.Screen name="Discover" component={DiscoverScreen} />
-    </Stack.Navigator>
-  );
-};
-
 export const ShopStack = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Items"
-        component={ItemsScreen}
-        options={({ navigation }) => ({
-          headerTitle: "All items",
-          headerRight: () => (
-            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-              <Item
-                title="Cart"
-                iconName="md-cart"
-                onPress={() => {
-                  navigation.navigate("Cart");
-                }}
-              />
-            </HeaderButtons>
-          ),
-          headerLeft: () => (
-            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-              <Item
-                title="Menu"
-                iconName="md-menu"
-                onPress={() => {
-                  navigation.toggleDrawer();
-                }}
-              />
-            </HeaderButtons>
-          ),
-        })}
-      />
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen name="Items" component={ItemsScreen} />
       <Stack.Screen
         name="Item Details"
         component={ItemDetailsScreen}
@@ -74,57 +33,12 @@ export const AuthStack = () => (
     <Stack.Screen name="Signup" component={Signup} />
     <Stack.Screen name="Login" component={Login} />
     <Stack.Screen name="Onboarding" component={Onboarding} />
-    <Stack.Screen
-      name="Auth"
-      component={AuthScreen}
-      options={({ navigation }) => ({
-        headerLeft: () => (
-          <HeaderButtons HeaderButtonComponent={HeaderButton}>
-            <Item
-              title="Menu"
-              iconName="md-menu"
-              onPress={() => {
-                navigation.toggleDrawer();
-              }}
-            />
-          </HeaderButtons>
-        ),
-      })}
-    />
   </Stack.Navigator>
 );
 
 export const AdminStack = () => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="UserItems"
-      component={UserItemsScreen}
-      options={({ navigation }) => ({
-        headerTitle: "Your Items",
-        headerLeft: () => (
-          <HeaderButtons HeaderButtonComponent={HeaderButton}>
-            <Item
-              title="Menu"
-              iconName="md-menu"
-              onPress={() => {
-                navigation.toggleDrawer();
-              }}
-            />
-          </HeaderButtons>
-        ),
-        headerRight: () => (
-          <HeaderButtons HeaderButtonComponent={HeaderButton}>
-            <Item
-              title="AddItem"
-              iconName="md-create"
-              onPress={() => {
-                navigation.navigate("EditItem");
-              }}
-            />
-          </HeaderButtons>
-        ),
-      })}
-    />
+  <Stack.Navigator headerMode="none">
+    <Stack.Screen name="UserItems" component={UserItemsScreen} />
     <Stack.Screen
       name="EditItem"
       component={EditItemScreen}

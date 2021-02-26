@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { ShopNavigator, AuthNavigator } from "./ShopNavigator";
 import StartupScreen from "../screens/StartupScreen";
 
 // ----------------------------------------------------------------
@@ -18,9 +17,6 @@ export default function AppNavigator(props) {
   console.log("didTryAutoLogin: ", didTryAutoLogin);
   return (
     <NavigationContainer>
-      {/* {isAuth && <ShopNavigator />}
-      {!isAuth && didTryAutoLogin && <AuthNavigator />}
-      {!isAuth && !didTryAutoLogin && <StartupScreen />} */}
       {isAuth && <AuthorizedNavigator />}
       {!isAuth && didTryAutoLogin && <UnauthNavigator />}
       {!isAuth && !didTryAutoLogin && <StartupScreen />}

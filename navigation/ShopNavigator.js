@@ -15,7 +15,6 @@ import CartScreen from "../screens/shop/CartScreen";
 import OrdersScreen from "../screens/shop/OrdersScreen";
 import UserItemsScreen from "../screens/user/UserItemsScreen";
 import EditItemScreen from "../screens/user/EditItemScreen";
-import AuthScreen from "../screens/user/AuthScreen";
 import * as authActions from "../store/actions/auth";
 import HeaderButton from "../components/ui/HeaderButton";
 import Colors from "../constants/Colors";
@@ -126,12 +125,6 @@ const UserStack = () => (
         headerTitle: route.params?.itemId ? "Edit Item" : "Add Item",
       })}
     />
-  </Stack.Navigator>
-);
-
-export const AuthNavigator = () => (
-  <Stack.Navigator>
-    <Stack.Screen name="Auth" component={AuthScreen} />
   </Stack.Navigator>
 );
 

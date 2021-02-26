@@ -5,38 +5,50 @@ import { useSelector, useDispatch } from "react-redux";
 import Colors from "../../constants/Colors";
 import CartItem from "../../components/shop/CartItem";
 import * as cartActions from "../../store/actions/cart";
+import Header from "../../components/ui/Header";
 
-const CartScreen = () => {
+const CartScreen = (props) => {
   const cartSum = useSelector((state) => state.cart.sum);
   const cartItems = useSelector((state) => state.cart.items);
 
   const dispatch = useDispatch();
 
   return (
-    <View style={styles.screen}>
-      <View style={styles.summary}>
-        <Text style={styles.summaryText}>
-          Total: <Text style={styles.amount}>€{cartSum.toFixed(2)}</Text>
-        </Text>
-        <Button
-          color={Colors.third}
-          title="Order Now"
-          disabled={cartItems.length === 0}
-        />
-      </View>
-      <FlatList
-        data={cartItems}
-        keyExtractor={(item) => item.id}
-        renderItem={(itemData) => (
-          <CartItem
-            {...itemData.item}
-            onRemove={() => {
-              dispatch(cartActions.removeFromCart(itemData.item.id));
-            }}
-          />
-        )}
+    <View>
+      <Header
+        left={{
+          icon: "arrow-left",
+          onPress: () => {
+            props.navigation.goBack();
+          },
+        }}
+        title={"Cart"}
       />
-      <Text>Hello</Text>
+      <View style={styles.screen}>
+        <View style={styles.summary}>
+          <Text style={styles.summaryText}>
+            Total: <Text style={styles.amount}>€{cartSum.toFixed(2)}</Text>
+          </Text>
+          <Button
+            color={Colors.third}
+            title="Order Now"
+            disabled={cartItems.length === 0}
+          />
+        </View>
+        <FlatList
+          data={cartItems}
+          keyExtractor={(item) => item.id}
+          renderItem={(itemData) => (
+            <CartItem
+              {...itemData.item}
+              onRemove={() => {
+                dispatch(cartActions.removeFromCart(itemData.item.id));
+              }}
+            />
+          )}
+        />
+        <Text>Hello</Text>
+      </View>
     </View>
   );
 };
@@ -45,7 +57,7 @@ export default CartScreen;
 
 const styles = StyleSheet.create({
   screen: {
-    margin: 20,
+    marginTop: 100,
   },
   summary: {
     flexDirection: "row",

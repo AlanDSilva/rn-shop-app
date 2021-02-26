@@ -18,6 +18,7 @@ import LocationSelector from "../../components/ui/LocationSelector";
 import MapPreview from "../../components/ui/MapPreview";
 import env from "../../env";
 import useField from "../../hooks/useField";
+import Header from "../../components/ui/Header";
 
 const EditItemScreen = (props) => {
   const itemId = props.route.params?.itemId;
@@ -63,86 +64,105 @@ const EditItemScreen = (props) => {
   const dispatch = useDispatch();
 
   return (
-    <ScrollView>
-      <View style={styles.form}>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Title</Text>
-          <TextInput style={styles.input} {...title} />
-        </View>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Description</Text>
-          <TextInput style={styles.input} {...description} />
-        </View>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Category</Text>
-          <TextInput style={styles.input} {...category} />
-        </View>
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Price</Text>
-          <TextInput style={styles.input} {...price} />
-        </View>
+    <View>
+      <Header
+        left={{
+          icon: "arrow-left",
+          onPress: () => {
+            props.navigation.goBack();
+          },
+        }}
+        title={"Edit Item"}
+        right={{
+          icon: "plus",
+          onPress: () => {
+            console.log("Will add");
+          },
+        }}
+      />
+      <View style={{ marginTop: 80 }}>
+        <ScrollView>
+          <View style={styles.form}>
+            <View style={styles.formControl}>
+              <Text style={styles.label}>Title</Text>
+              <TextInput style={styles.input} {...title} />
+            </View>
+            <View style={styles.formControl}>
+              <Text style={styles.label}>Description</Text>
+              <TextInput style={styles.input} {...description} />
+            </View>
+            <View style={styles.formControl}>
+              <Text style={styles.label}>Category</Text>
+              <TextInput style={styles.input} {...category} />
+            </View>
+            <View style={styles.formControl}>
+              <Text style={styles.label}>Price</Text>
+              <TextInput style={styles.input} {...price} />
+            </View>
 
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Images Selector</Text>
-          <View style={styles.imagesPicker}>
-            <ImageSelector
-              pickedImage={pickedImage}
-              pictureTaken={(picUrl) => setPickedImage(picUrl)}
-            />
-            <ImageSelector
-              pickedImage={pickedImage2}
-              pictureTaken={(picUrl) => setPickedImage2(picUrl)}
-            />
+            <View style={styles.formControl}>
+              <Text style={styles.label}>Images Selector</Text>
+              <View style={styles.imagesPicker}>
+                <ImageSelector
+                  pickedImage={pickedImage}
+                  pictureTaken={(picUrl) => setPickedImage(picUrl)}
+                />
+                <ImageSelector
+                  pickedImage={pickedImage2}
+                  pictureTaken={(picUrl) => setPickedImage2(picUrl)}
+                />
+              </View>
+            </View>
+
+            <View style={styles.formControl}>
+              <Text style={styles.label}>Location</Text>
+              <TextInput style={styles.input} {...location} />
+            </View>
+            <View style={styles.formControl}>
+              <MapPreview
+                onOpenMap={() => {
+                  props.navigation.navigate("Map");
+                }}
+                location={pickedLocation}
+              />
+
+              <LocationSelector
+                onOpenMap={() => {
+                  props.navigation.navigate("Map");
+                }}
+                locationChosen={(newLocation) => setPickedLocation(newLocation)}
+              />
+            </View>
+
+            <View style={styles.formControl}>
+              <Text style={styles.label}>Delivery Type</Text>
+              <TextInput style={styles.input} {...deliveryType} />
+            </View>
+            <View style={styles.formControl}>
+              <Button
+                color={Colors.primary}
+                title="Submit"
+                onPress={() => {
+                  console.log("submitting");
+                  dispatch(
+                    itemsActions.createItem(
+                      title.value,
+                      description.value,
+                      category.value,
+                      location.value,
+                      pickedImage,
+                      pickedImage2,
+                      price.value,
+                      deliveryType.value
+                    )
+                  );
+                }}
+              />
+            </View>
           </View>
-        </View>
-
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Location</Text>
-          <TextInput style={styles.input} {...location} />
-        </View>
-        <View style={styles.formControl}>
-          <MapPreview
-            onOpenMap={() => {
-              props.navigation.navigate("Map");
-            }}
-            location={pickedLocation}
-          />
-
-          <LocationSelector
-            onOpenMap={() => {
-              props.navigation.navigate("Map");
-            }}
-            locationChosen={(newLocation) => setPickedLocation(newLocation)}
-          />
-        </View>
-
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Delivery Type</Text>
-          <TextInput style={styles.input} {...deliveryType} />
-        </View>
-        <View style={styles.formControl}>
-          <Button
-            color={Colors.primary}
-            title="Submit"
-            onPress={() => {
-              console.log("submitting");
-              dispatch(
-                itemsActions.createItem(
-                  title.value,
-                  description.value,
-                  category.value,
-                  location.value,
-                  pickedImage,
-                  pickedImage2,
-                  price.value,
-                  deliveryType.value
-                )
-              );
-            }}
-          />
-        </View>
+        </ScrollView>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

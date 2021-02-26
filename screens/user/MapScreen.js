@@ -1,25 +1,11 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState } from "react";
 import MapView, { Marker } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import HeaderButton from "../../components/ui/HeaderButton";
+import { StyleSheet, View, Dimensions } from "react-native";
+import Header from "../../components/ui/Header";
 
 export default function MapScreen(props) {
   const [selectedLocation, setSelectedLocation] = useState();
 
-  useLayoutEffect(() => {
-    props.navigation.setOptions({
-      headerRight: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item
-            title="SaveLocation"
-            iconName="md-save"
-            onPress={savePickedLocationHandler}
-          />
-        </HeaderButtons>
-      ),
-    });
-  }, [selectedLocation]);
   const myRegion = {
     latitude: 37.78825,
     longitude: -122.4324,
@@ -58,6 +44,19 @@ export default function MapScreen(props) {
           ></Marker>
         )}
       </MapView>
+      <Header
+        left={{
+          icon: "arrow-left",
+          onPress: () => {
+            props.navigation.goBack();
+          },
+        }}
+        title={"Pick Location"}
+        right={{
+          icon: "plus",
+          onPress: savePickedLocationHandler,
+        }}
+      />
     </View>
   );
 }

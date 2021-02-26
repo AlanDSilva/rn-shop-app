@@ -13,6 +13,7 @@ import RNPickerSelect from "react-native-picker-select";
 import ProductItem from "../../components/shop/ProductItem";
 import * as cartActions from "../../store/actions/cart";
 import * as itemsActions from "../../store/actions/items";
+import Header from "../../components/ui/Header";
 
 import Colors from "../../constants/Colors";
 
@@ -103,50 +104,68 @@ const ItemsScreen = (props) => {
 
   return (
     <View>
-      <CustomSearchBar
-        setCat={setCat}
-        setLoc={setLoc}
-        setOPrice={setOPrice}
-        setODate={setODate}
+      <Header
+        left={{
+          icon: "menu",
+          onPress: () => {
+            props.navigation.openDrawer();
+          },
+        }}
+        title={"Items"}
+        right={{
+          icon: "shopping-bag",
+          onPress: () => {
+            props.navigation.navigate("Cart");
+          },
+        }}
       />
-      {isLoading ? (
-        <View style={styles.centered}>
-          <ActivityIndicator size="large" color={Colors.primary} />
-        </View>
-      ) : !isLoading && products.length === 0 ? (
-        <View style={styles.centered}>
-          <Text>No products found! Maybe start adding some!</Text>
-        </View>
-      ) : (
-        <FlatList
-          data={products}
-          keyExtractor={(item) => item.id}
-          renderItem={(itemData) => (
-            <ProductItem
-              {...itemData.item}
-              onSelect={() => {
-                selectItemHandler(itemData.item.id, itemData.item.title);
-              }}
-            >
-              <Button
-                color={Colors.primary}
-                title="View Iem"
-                onPress={() => {
+      <View style={{ marginTop: 90 }}>
+        <CustomSearchBar
+          setCat={setCat}
+          setLoc={setLoc}
+          setOPrice={setOPrice}
+          setODate={setODate}
+        />
+
+        {isLoading ? (
+          <View style={styles.centered}>
+            <ActivityIndicator size="large" color={Colors.primary} />
+          </View>
+        ) : !isLoading && products.length === 0 ? (
+          <View style={styles.centered}>
+            <Text>No products found! Maybe start adding some!</Text>
+          </View>
+        ) : (
+          <FlatList
+            data={products}
+            keyExtractor={(item) => item.id}
+            renderItem={(itemData) => (
+              <ProductItem
+                {...itemData.item}
+                onSelect={() => {
                   selectItemHandler(itemData.item.id, itemData.item.title);
                 }}
-              />
-              <Button
-                color={Colors.primary}
-                title="ToCart"
-                onPress={() => {
-                  dispatch(cartActions.addToCart(itemData.item));
-                }}
-              />
-            </ProductItem>
-          )}
-          numColumns={2}
-        />
-      )}
+              >
+                <Button
+                  color={Colors.primary}
+                  title="View Iem"
+                  onPress={() => {
+                    selectItemHandler(itemData.item.id, itemData.item.title);
+                  }}
+                />
+                <Button
+                  color={Colors.primary}
+                  title="ToCart"
+                  onPress={() => {
+                    dispatch(cartActions.addToCart(itemData.item));
+                  }}
+                />
+              </ProductItem>
+            )}
+            numColumns={2}
+          />
+        )}
+      </View>
     </View>
   );
 };
