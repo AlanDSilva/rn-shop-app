@@ -25,7 +25,6 @@ const EditItemScreen = (props) => {
   const editedItem = useSelector((state) =>
     state.items.userItems?.find((item) => item.id === itemId)
   );
-
   const title = useField(editedItem?.title);
   const description = useField(editedItem?.description);
   const category = useField(editedItem?.category);
@@ -143,19 +142,32 @@ const EditItemScreen = (props) => {
                 color={Colors.primary}
                 title="Submit"
                 onPress={() => {
-                  console.log("submitting");
-                  dispatch(
-                    itemsActions.createItem(
-                      title.value,
-                      description.value,
-                      category.value,
-                      location.value,
-                      pickedImage,
-                      pickedImage2,
-                      price.value,
-                      deliveryType.value
-                    )
-                  );
+                  itemId
+                    ? dispatch(
+                        itemsActions.editItem(
+                          itemId,
+                          title.value,
+                          description.value,
+                          category.value,
+                          location.value,
+                          pickedImage,
+                          pickedImage2,
+                          price.value,
+                          deliveryType.value
+                        )
+                      )
+                    : dispatch(
+                        itemsActions.createItem(
+                          title.value,
+                          description.value,
+                          category.value,
+                          location.value,
+                          pickedImage,
+                          pickedImage2,
+                          price.value,
+                          deliveryType.value
+                        )
+                      );
                 }}
               />
             </View>

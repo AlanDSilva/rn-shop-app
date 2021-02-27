@@ -1,4 +1,9 @@
-import { DELETE_ITEM, SET_ITEMS, CREATE_ITEM } from "../actions/items";
+import {
+  DELETE_ITEM,
+  SET_ITEMS,
+  CREATE_ITEM,
+  EDIT_ITEM,
+} from "../actions/items";
 
 const initialState = {
   availableItems: [],
@@ -31,6 +36,18 @@ export default (state = initialState, action) => {
       return {
         availableItems: state.availableItems.concat(action.payload),
         userItems: state.userItems.concat(action.payload),
+      };
+
+    case EDIT_ITEM:
+      console.log("Editing item with payload: ", action.payload);
+
+      return {
+        availableItems: state.availableItems
+          .filter((item) => item.id !== action.itemId)
+          .concat(action.payload),
+        userItems: state.userItems
+          .filter((item) => item.id !== action.itemId)
+          .concat(action.payload),
       };
   }
   return state;
