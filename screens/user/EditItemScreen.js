@@ -8,6 +8,8 @@ import {
   View,
   Button,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -99,7 +101,9 @@ const EditItemScreen = (props) => {
   };
 
   return (
-    <View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <Header
         left={{
           icon: "arrow-left",
@@ -187,7 +191,7 @@ const EditItemScreen = (props) => {
           </View>
         </ScrollView>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
