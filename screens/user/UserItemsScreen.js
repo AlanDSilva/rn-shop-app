@@ -60,6 +60,7 @@ const UserItemsScreen = (props) => {
               />
             </ProductItem>
           )}
+          numColumns={2}
         />
       </View>
     </View>

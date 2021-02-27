@@ -1,5 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 
 import * as Styles from "../../constants/Styles";
 import Colors from "../../constants/Colors";
@@ -28,13 +36,16 @@ const Container = (props) => {
           />
         </View>
       </View>
-      <View style={styles.main}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.main}
+      >
         <Image
           source={require("/Users/alan/localProjects/rn-shop-app/assets/patterns/backgroud_pattern.jpg")}
           style={[{ ...StyleSheet.absoluteFillObject }, styles.headerImage]}
         />
         <View style={styles.body}>{props.children}</View>
-      </View>
+      </KeyboardAvoidingView>
       <View style={{ height: 100, backgroundColor: Colors.accent }}>
         {props.footer}
       </View>

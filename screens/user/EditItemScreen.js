@@ -64,6 +64,40 @@ const EditItemScreen = (props) => {
 
   const dispatch = useDispatch();
 
+  const uploadItemHandler = () => {
+    setIsUploading(true);
+    if (itemId) {
+      dispatch(
+        itemsActions.editItem(
+          itemId,
+          title.value,
+          description.value,
+          category.value,
+          location.value,
+          pickedImage,
+          pickedImage2,
+          price.value,
+          deliveryType.value
+        )
+      );
+    } else {
+      dispatch(
+        itemsActions.createItem(
+          title.value,
+          description.value,
+          category.value,
+          location.value,
+          pickedImage,
+          pickedImage2,
+          price.value,
+          deliveryType.value
+        )
+      );
+    }
+    setIsUploading(false);
+    props.navigation.navigate("UserItems");
+  };
+
   return (
     <View>
       <Header
@@ -146,39 +180,7 @@ const EditItemScreen = (props) => {
                 <Button
                   color={Colors.primary}
                   title="Submit"
-                  onPress={() => {
-                    setIsUploading(true);
-                    if (itemId) {
-                      dispatch(
-                        itemsActions.editItem(
-                          itemId,
-                          title.value,
-                          description.value,
-                          category.value,
-                          location.value,
-                          pickedImage,
-                          pickedImage2,
-                          price.value,
-                          deliveryType.value
-                        )
-                      );
-                    } else {
-                      dispatch(
-                        itemsActions.createItem(
-                          title.value,
-                          description.value,
-                          category.value,
-                          location.value,
-                          pickedImage,
-                          pickedImage2,
-                          price.value,
-                          deliveryType.value
-                        )
-                      );
-                    }
-                    setIsUploading(false);
-                    props.navigation.navigate("UserItems");
-                  }}
+                  onPress={uploadItemHandler}
                 />
               )}
             </View>

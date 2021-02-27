@@ -23,10 +23,10 @@ const ProductItem = (props) => {
               <Image style={styles.image} source={{ uri: props.images[0] }} />
             </View>
             <View style={styles.details}>
-              <View style={styles.row}>
-                <Text style={styles.title}>{props.title}</Text>
-                <Text style={styles.price}>€{props.price.toFixed(2)}</Text>
-              </View>
+              <Text style={styles.title}>{props.title}</Text>
+
+              <Text style={styles.price}>€{props.price.toFixed(2)}</Text>
+
               <View style={styles.row}>
                 <Text style={styles.small}>
                   {props.date.split("T").shift()} by
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
   },
   small: {

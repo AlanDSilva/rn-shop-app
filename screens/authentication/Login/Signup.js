@@ -56,9 +56,7 @@ const Signup = ({ navigation }) => {
   );
   return (
     <Container navigation={navigation} footer={footer}>
-      <View
-        style={{ margin: 20, alignItems: "center", justifyContent: "center" }}
-      >
+      <View style={{ alignItems: "center", justifyContent: "center" }}>
         <Text style={{ ...Styles.text.title1 }}>Welcome Back</Text>
         <Text style={{ ...Styles.text.body }}>
           Use yout credentials below and login to your account

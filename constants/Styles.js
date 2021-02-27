@@ -19,8 +19,8 @@ export const text = {
     fontSize: 28,
     color: Colors.accent,
     textAlign: "center",
-    padding: 10,
-    paddingTop: 50,
+    padding: 5,
+    paddingTop: 20,
   },
 
   title2: {
