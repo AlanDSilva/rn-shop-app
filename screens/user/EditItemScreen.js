@@ -7,7 +7,7 @@ import {
   ScrollView,
   View,
   Button,
-  Image,
+  ActivityIndicator,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -21,6 +21,8 @@ import useField from "../../hooks/useField";
 import Header from "../../components/ui/Header";
 
 const EditItemScreen = (props) => {
+  const [isUploading, setIsUploading] = useState(false);
+
   const itemId = props.route.params?.itemId;
   const editedItem = useSelector((state) =>
     state.items.userItems?.find((item) => item.id === itemId)
@@ -138,12 +140,16 @@ const EditItemScreen = (props) => {
               <TextInput style={styles.input} {...deliveryType} />
             </View>
             <View style={styles.formControl}>
-              <Button
-                color={Colors.primary}
-                title="Submit"
-                onPress={() => {
-                  itemId
-                    ? dispatch(
+              {isUploading ? (
+                <ActivityIndicator size="small" color={Colors.primary} />
+              ) : (
+                <Button
+                  color={Colors.primary}
+                  title="Submit"
+                  onPress={() => {
+                    setIsUploading(true);
+                    if (itemId) {
+                      dispatch(
                         itemsActions.editItem(
                           itemId,
                           title.value,
@@ -155,8 +161,9 @@ const EditItemScreen = (props) => {
                           price.value,
                           deliveryType.value
                         )
-                      )
-                    : dispatch(
+                      );
+                    } else {
+                      dispatch(
                         itemsActions.createItem(
                           title.value,
                           description.value,
@@ -168,8 +175,12 @@ const EditItemScreen = (props) => {
                           deliveryType.value
                         )
                       );
-                }}
-              />
+                    }
+                    setIsUploading(false);
+                    props.navigation.navigate("UserItems");
+                  }}
+                />
+              )}
             </View>
           </View>
         </ScrollView>

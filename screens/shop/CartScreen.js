@@ -42,7 +42,7 @@ const CartScreen = (props) => {
             <CartItem
               {...itemData.item}
               onRemove={() => {
-                dispatch(cartActions.removeFromCart(itemData.item.id));
+                dispatch(cartActions.removeFromCart(itemData.item));
               }}
             />
           )}

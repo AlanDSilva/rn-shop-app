@@ -22,11 +22,9 @@ export default (state = initialState, action) => {
       }
       break;
     case REMOVE_FROM_CART:
-      console.log(action.itemId);
-      const updatedItems = _.filter(state.items, (o) => o.id !== action.itemId);
       return {
-        items: updatedItems,
-        sum: 0,
+        items: state.items.filter((item) => item.id !== action.item.id),
+        sum: state.sum - action.item.price,
       };
   }
 

@@ -5,6 +5,7 @@ export const addToCart = (item) => {
   return { type: ADD_TO_CART, item: item };
 };
 
-export const removeFromCart = (itemId) => {
-  return { type: REMOVE_FROM_CART, itemId: itemId };
+//To do
+export const removeFromCart = (item) => {
+  return { type: REMOVE_FROM_CART, item: item };
 };

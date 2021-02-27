@@ -133,6 +133,7 @@ export const deleteItem = (id) => {
     };
 
     const response = await axios.delete(`${baseUrl}/${id}`, config);
+    console.log(response);
 
     dispatch({ type: DELETE_ITEM, itemId: id });
   };
