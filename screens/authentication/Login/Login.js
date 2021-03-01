@@ -23,6 +23,8 @@ const Login = ({ navigation }) => {
   const username = useField("");
   const password = useField("");
 
+  const dispatch = useDispatch();
+
   const authHandler = async () => {
     setIsLoading(true);
     console.log("Will signup with ", username.value, password.value);
@@ -30,11 +32,10 @@ const Login = ({ navigation }) => {
       await dispatch(authActions.login(username.value, password.value));
     } catch (err) {
       alert(err.data.error);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
-  const dispatch = useDispatch();
   const footer = (
     <View style={styles.footerText}>
       <Text style={{ color: "white" }}>Don't have an account?</Text>

@@ -24,7 +24,7 @@ const ImageSelector = ({ pictureTaken, pickedImage }) => {
     const image = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [16, 9],
-      quality: 0.7,
+      quality: 0.2,
     });
 
     const fileNameSplit = image.uri.split("/");

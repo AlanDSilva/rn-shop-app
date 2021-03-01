@@ -5,8 +5,7 @@ export const SET_ITEMS = "SET_ITEMS";
 export const CREATE_ITEM = "CREATE_ITEM";
 export const EDIT_ITEM = "EDIT_ITEM";
 
-const baseUrl = "http://192.168.43.141:3000/api/items";
-//const baseUrl = "http://172.20.10.2:3000/api/items";
+const baseUrl = "https://afternoon-atoll-14172.herokuapp.com/api/items";
 
 export const fetchItems = (cat, loc, oPrice, oDate) => {
   console.log(cat, loc, oPrice, oDate);
@@ -20,7 +19,7 @@ export const fetchItems = (cat, loc, oPrice, oDate) => {
   return async (dispatch, getState) => {
     const response = await axios.get(baseUrl, { params });
     const resData = response.data;
-
+    console.log("Fetching items");
     dispatch({
       type: SET_ITEMS,
       items: resData,
@@ -54,8 +53,6 @@ export const createItem = (
     postForm.append("image", pickedImage2);
     postForm.append("price", price);
     postForm.append("deliveryType", deliveryType);
-
-    console.log("Postform: ", postForm);
     // ------
     const config = {
       headers: { Authorization: token, "Content-Type": "multipart/form-data" },
@@ -103,7 +100,7 @@ export const editItem = (
     postForm.append("price", price);
     postForm.append("deliveryType", deliveryType);
 
-    console.log("Postform: ", postForm);
+    console.log("Postform in editing: ", postForm);
     // ------
     const config = {
       headers: { Authorization: token, "Content-Type": "multipart/form-data" },

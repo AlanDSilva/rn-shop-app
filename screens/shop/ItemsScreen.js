@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import RNPickerSelect from "react-native-picker-select";
+import _ from "lodash";
 
 import ProductItem from "../../components/shop/ProductItem";
 import * as cartActions from "../../store/actions/cart";
@@ -84,6 +85,8 @@ const ItemsScreen = (props) => {
   const [oPrice, setOPrice] = useState("");
   const [oDate, setODate] = useState("");
   const products = useSelector((state) => state.items.availableItems);
+  const cart = useSelector((state) => state.cart.items);
+  const alreadyInCart = _.intersectionBy(products, cart, "id");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -155,7 +158,7 @@ const ItemsScreen = (props) => {
                 />
                 <Button
                   color={Colors.primary}
-                  title="ToCart"
+                  title={"ToCart"}
                   onPress={() => {
                     dispatch(cartActions.addToCart(itemData.item));
                   }}

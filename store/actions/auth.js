@@ -7,8 +7,7 @@ export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const SET_DID_TRY_AL = "SET_DID_TRY_AL";
 
-const baseUrl = "http://192.168.43.141:3000/api";
-// const baseUrl = "http://172.20.10.2:3000/api";
+const baseUrl = "https://afternoon-atoll-14172.herokuapp.com/api";
 
 const saveDataToStorage = (token, username, name) => {
   AsyncStorage.setItem(
@@ -79,7 +78,11 @@ export const login = (username, password) => {
 
 export const logout = () => {
   return async (dispatch) => {
-    await AsyncStorage.removeItem("userData");
-    dispatch({ type: LOGOUT });
+    try {
+      await AsyncStorage.removeItem("userData");
+      dispatch({ type: LOGOUT });
+    } catch (err) {
+      console.log(err);
+    }
   };
 };

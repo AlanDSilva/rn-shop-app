@@ -38,8 +38,8 @@ const Signup = ({ navigation }) => {
       );
     } catch (err) {
       alert(err.data.error);
+      setIsLoading(true);
     }
-    setIsLoading(false);
   };
 
   const dispatch = useDispatch();

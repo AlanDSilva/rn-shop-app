@@ -47,7 +47,6 @@ const CartScreen = (props) => {
             />
           )}
         />
-        <Text>Hello</Text>
       </View>
     </View>
   );

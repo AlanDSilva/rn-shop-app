@@ -20,11 +20,20 @@ export const TextField = ({ placeholder, icon, field }) => {
       }}
     >
       <Feather name={icon} size={24} color={Colors.primary} />
-      <TextInput
-        style={{ width: "90%", height: 48 }}
-        {...{ placeholder }}
-        {...field}
-      />
+      {icon === "lock" ? (
+        <TextInput
+          style={{ width: "90%", height: 48 }}
+          {...{ placeholder }}
+          {...field}
+          secureTextEntry={true}
+        />
+      ) : (
+        <TextInput
+          style={{ width: "90%", height: 48 }}
+          {...{ placeholder }}
+          {...field}
+        />
+      )}
     </View>
   );
 };

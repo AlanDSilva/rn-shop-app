@@ -59,11 +59,17 @@ const Onboarding = () => {
       }
       const transformedData = JSON.parse(userData);
       const { token, username, name } = transformedData;
-      dispatch(authActions.authenticate(token, username, name));
+      console.log("transformed data ", transformedData);
+      try {
+        dispatch(authActions.authenticate(token, username, name));
+      } catch (err) {
+        console.log(err);
+        setIsLoading(false);
+      }
     } catch (err) {
       console.error(err);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (
